@@ -1,0 +1,517 @@
+// Portfolio Website JavaScript
+
+// DOM Elements
+const navbar = document.getElementById('navbar');
+const navToggle = document.getElementById('nav-toggle');
+const navMenu = document.getElementById('nav-menu');
+const navLinks = document.querySelectorAll('.nav-link');
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+const contactForm = document.getElementById('contact-form');
+
+// Theme Management
+class ThemeManager {
+    constructor() {
+        this.currentTheme = localStorage.getItem('theme') || 'light';
+        this.init();
+    }
+
+    init() {
+        this.setTheme(this.currentTheme);
+        this.bindEvents();
+    }
+
+    setTheme(theme) {
+        this.currentTheme = theme;
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        
+        // Update theme icon
+        if (theme === 'dark') {
+            themeIcon.className = 'fas fa-sun';
+        } else {
+            themeIcon.className = 'fas fa-moon';
+        }
+    }
+
+    toggleTheme() {
+        const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        this.setTheme(newTheme);
+    }
+
+    bindEvents() {
+        themeToggle.addEventListener('click', () => this.toggleTheme());
+    }
+}
+
+// Navigation Management
+class NavigationManager {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        this.bindEvents();
+        this.setActiveNavLink();
+    }
+
+    bindEvents() {
+        // Mobile menu toggle
+        navToggle.addEventListener('click', () => this.toggleMobileMenu());
+        
+        // Close mobile menu when clicking on links
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => this.closeMobileMenu());
+        });
+
+        // Scroll events
+        window.addEventListener('scroll', () => {
+            this.handleScroll();
+            this.setActiveNavLink();
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (target) {
+                    const offsetTop = target.offsetTop - 80; // Account for fixed navbar
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    }
+
+    toggleMobileMenu() {
+        navMenu.classList.toggle('active');
+        navToggle.classList.toggle('active');
+    }
+
+    closeMobileMenu() {
+        navMenu.classList.remove('active');
+        navToggle.classList.remove('active');
+    }
+
+    handleScroll() {
+        if (window.scrollY > 100) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    }
+
+    setActiveNavLink() {
+        const sections = document.querySelectorAll('section[id]');
+        const scrollPos = window.scrollY + 100;
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+
+            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }
+}
+
+// Animation Manager
+class AnimationManager {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        this.observeElements();
+        this.animateOnScroll();
+    }
+
+    observeElements() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements that should animate
+        const animatedElements = document.querySelectorAll(
+            '.section-title, .section-subtitle, .about-description, .stat, .skill-category, .project-card, .contact-item'
+        );
+
+        animatedElements.forEach(el => {
+            el.classList.add('fade-in');
+            observer.observe(el);
+        });
+    }
+
+    animateOnScroll() {
+        // Stagger animation for stats
+        const stats = document.querySelectorAll('.stat');
+        stats.forEach((stat, index) => {
+            stat.style.animationDelay = `${index * 0.1}s`;
+        });
+
+        // Stagger animation for skill items
+        const skillItems = document.querySelectorAll('.skill-item');
+        skillItems.forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.05}s`;
+        });
+    }
+}
+
+// Contact Form Manager
+class ContactFormManager {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        this.bindEvents();
+    }
+
+    bindEvents() {
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => this.handleSubmit(e));
+        }
+    }
+
+    async handleSubmit(e) {
+        e.preventDefault();
+        
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        
+        // Show loading state
+        submitBtn.innerHTML = '<div class="loading"></div> Sending...';
+        submitBtn.disabled = true;
+
+        try {
+            // Simulate form submission (replace with actual API call)
+            await this.simulateFormSubmission();
+            
+            // Show success message
+            this.showMessage('Message sent successfully! I\'ll get back to you soon.', 'success');
+            contactForm.reset();
+            
+        } catch (error) {
+            // Show error message
+            this.showMessage('Sorry, there was an error sending your message. Please try again.', 'error');
+        } finally {
+            // Reset button
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
+    }
+
+    async simulateFormSubmission() {
+        // Simulate network delay
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                // Simulate 90% success rate
+                if (Math.random() > 0.1) {
+                    resolve();
+                } else {
+                    reject(new Error('Simulated error'));
+                }
+            }, 2000);
+        });
+    }
+
+    showMessage(message, type) {
+        // Create message element
+        const messageEl = document.createElement('div');
+        messageEl.className = `message message-${type}`;
+        messageEl.textContent = message;
+        
+        // Style the message
+        Object.assign(messageEl.style, {
+            position: 'fixed',
+            top: '20px',
+            right: '20px',
+            padding: '1rem 1.5rem',
+            borderRadius: '0.5rem',
+            color: 'white',
+            backgroundColor: type === 'success' ? '#10b981' : '#ef4444',
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+            zIndex: '9999',
+            transform: 'translateX(100%)',
+            transition: 'transform 0.3s ease'
+        });
+
+        document.body.appendChild(messageEl);
+
+        // Animate in
+        setTimeout(() => {
+            messageEl.style.transform = 'translateX(0)';
+        }, 100);
+
+        // Remove after 5 seconds
+        setTimeout(() => {
+            messageEl.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                document.body.removeChild(messageEl);
+            }, 300);
+        }, 5000);
+    }
+}
+
+// Typing Animation for Hero Title
+class TypingAnimation {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        const heroTitle = document.querySelector('.hero-title');
+        if (heroTitle) {
+            this.animateTitle(heroTitle);
+        }
+    }
+
+    animateTitle(element) {
+        const text = element.textContent;
+        element.textContent = '';
+        
+        let i = 0;
+        const typeWriter = () => {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        };
+
+        // Start typing animation after a short delay
+        setTimeout(typeWriter, 1000);
+    }
+}
+
+// Particle Background Effect
+class ParticleBackground {
+    constructor() {
+        this.canvas = null;
+        this.ctx = null;
+        this.particles = [];
+        this.init();
+    }
+
+    init() {
+        this.createCanvas();
+        this.createParticles();
+        this.animate();
+        this.bindEvents();
+    }
+
+    createCanvas() {
+        this.canvas = document.createElement('canvas');
+        this.canvas.style.position = 'fixed';
+        this.canvas.style.top = '0';
+        this.canvas.style.left = '0';
+        this.canvas.style.width = '100%';
+        this.canvas.style.height = '100%';
+        this.canvas.style.pointerEvents = 'none';
+        this.canvas.style.zIndex = '-1';
+        this.canvas.style.opacity = '0.1';
+        
+        document.body.appendChild(this.canvas);
+        this.ctx = this.canvas.getContext('2d');
+        
+        this.resizeCanvas();
+    }
+
+    resizeCanvas() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+    }
+
+    createParticles() {
+        const particleCount = Math.min(50, Math.floor(window.innerWidth / 20));
+        
+        for (let i = 0; i < particleCount; i++) {
+            this.particles.push({
+                x: Math.random() * this.canvas.width,
+                y: Math.random() * this.canvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                size: Math.random() * 2 + 1
+            });
+        }
+    }
+
+    animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        this.particles.forEach(particle => {
+            // Update position
+            particle.x += particle.vx;
+            particle.y += particle.vy;
+            
+            // Bounce off edges
+            if (particle.x < 0 || particle.x > this.canvas.width) particle.vx *= -1;
+            if (particle.y < 0 || particle.y > this.canvas.height) particle.vy *= -1;
+            
+            // Draw particle
+            this.ctx.beginPath();
+            this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            this.ctx.fillStyle = '#4f46e5';
+            this.ctx.fill();
+        });
+        
+        requestAnimationFrame(() => this.animate());
+    }
+
+    bindEvents() {
+        window.addEventListener('resize', () => {
+            this.resizeCanvas();
+            this.particles = [];
+            this.createParticles();
+        });
+    }
+}
+
+// Performance Optimization
+class PerformanceOptimizer {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        this.lazyLoadImages();
+        this.optimizeScrollEvents();
+    }
+
+    lazyLoadImages() {
+        const images = document.querySelectorAll('img[data-src]');
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+
+        images.forEach(img => imageObserver.observe(img));
+    }
+
+    optimizeScrollEvents() {
+        let ticking = false;
+        
+        const optimizedScrollHandler = () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    // Scroll-dependent code here
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+
+        window.addEventListener('scroll', optimizedScrollHandler, { passive: true });
+    }
+}
+
+// Initialize all components when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize all managers
+    new ThemeManager();
+    new NavigationManager();
+    new AnimationManager();
+    new ContactFormManager();
+    new TypingAnimation();
+    new ParticleBackground();
+    new PerformanceOptimizer();
+
+    // Add some interactive effects
+    addSkillHoverEffects();
+    addProjectHoverEffects();
+});
+
+// Additional Interactive Effects
+function addSkillHoverEffects() {
+    const skillItems = document.querySelectorAll('.skill-item');
+    
+    skillItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            item.style.transform = 'translateY(-5px) scale(1.05)';
+            item.style.boxShadow = '0 10px 25px rgba(79, 70, 229, 0.2)';
+        });
+        
+        item.addEventListener('mouseleave', () => {
+            item.style.transform = 'translateY(0) scale(1)';
+            item.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+        });
+    });
+}
+
+function addProjectHoverEffects() {
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    projectCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-10px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+}
+
+// Utility Functions
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
+// Export for potential module use
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        ThemeManager,
+        NavigationManager,
+        AnimationManager,
+        ContactFormManager,
+        TypingAnimation,
+        ParticleBackground,
+        PerformanceOptimizer
+    };
+}

@@ -1,0 +1,59 @@
+{
+  "name": "parampatel-dev-portfolio",
+  "version": "1.0.0",
+  "description": "Param Patel's developer portfolio website - A modern, responsive portfolio showcasing full-stack development skills",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server . -p 3000 -o",
+    "dev": "npx live-server --port=3000 --open=/index.html",
+    "build": "echo 'No build process needed for static site'",
+    "deploy": "echo 'Ready for deployment to any static hosting service'",
+    "lint": "npx htmlhint index.html && npx stylelint styles.css && npx eslint script.js",
+    "optimize": "npx imagemin images/* --out-dir=images/optimized",
+    "validate": "npx html-validate index.html"
+  },
+  "keywords": [
+    "portfolio",
+    "developer",
+    "full-stack",
+    "web-development",
+    "javascript",
+    "html",
+    "css",
+    "responsive",
+    "modern",
+    "parampatel"
+  ],
+  "author": {
+    "name": "Param Patel",
+    "email": "hello@parampatel.dev",
+    "url": "https://parampatel.dev"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/parampatel/parampatel-dev.git"
+  },
+  "homepage": "https://parampatel.dev",
+  "devDependencies": {
+    "htmlhint": "^1.1.4",
+    "stylelint": "^15.11.0",
+    "stylelint-config-standard": "^34.0.0",
+    "eslint": "^8.56.0",
+    "eslint-config-standard": "^17.1.0",
+    "html-validate": "^8.7.4",
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2",
+    "imagemin": "^8.0.1",
+    "imagemin-cli": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
