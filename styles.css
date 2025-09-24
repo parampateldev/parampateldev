@@ -600,8 +600,9 @@ section {
 
 .project-image {
   position: relative;
-  height: 200px;
+  height: 250px;
   overflow: hidden;
+  border-radius: 1rem 1rem 0 0;
 }
 
 .project-image img {
@@ -609,6 +610,22 @@ section {
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
+}
+
+.project-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(59, 130, 246, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.project-card:hover .project-image::after {
+  opacity: 1;
 }
 
 .project-overlay {
