@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Param Patel - Developer Portfolio</title>
-    <meta name="description" content="Param Patel - Full Stack Developer, Software Engineer, and Tech Enthusiast. Live project demos and portfolio updates. Dark mode enabled.">
+    <title>Nivas Kitchen - Authentic Indian Food Catering</title>
+    <meta name="description" content="Nivas Kitchen - Premium Indian food catering service. Authentic flavors, fresh ingredients, and exceptional service for your special events.">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -16,13 +16,16 @@
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <a href="#home">Param Patel</a>
+                <a href="index.html">
+                    <i class="fas fa-utensils"></i>
+                    Nivas Kitchen
+                </a>
             </div>
             <div class="nav-menu" id="nav-menu">
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#projects" class="nav-link">Projects</a>
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="menu.html" class="nav-link">Menu</a>
+                <a href="order.html" class="nav-link">Order</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
             <div class="nav-toggle" id="nav-toggle">
@@ -40,30 +43,39 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+        </div>
         <div class="hero-container">
             <div class="hero-content">
                 <div class="hero-text">
                     <h1 class="hero-title">
-                        Hi, I'm <span class="highlight">Param Patel</span>
+                        Welcome to <span class="highlight">Nivas Kitchen</span>
                     </h1>
-                    <h2 class="hero-subtitle">Computer Science Student @ University of Michigan
-                    
-                    </h2>
+                    <h2 class="hero-subtitle">Authentic Indian Food Catering</h2>
                     <p class="hero-description">
-                        I craft digital experiences through clean code and innovative solutions. 
-                        Passionate about building scalable applications and solving complex problems.
+                        Experience the rich flavors of India with our premium catering services. 
+                        From traditional curries to modern fusion dishes, we bring authentic taste to your special events.
                     </p>
                     <div class="hero-buttons">
-                        <a href="#projects" class="btn btn-primary">View My Work</a>
-                        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                        <a href="menu.html" class="btn btn-primary">View Our Menu</a>
+                        <a href="order.html" class="btn btn-secondary">Place Order</a>
                     </div>
                 </div>
                 <div class="hero-image">
-                    <div class="profile-card">
-                        <div class="profile-image">
-                            <img src="images/profile.JPG" alt="Param Patel" id="profile-img">
+                    <div class="food-showcase">
+                        <div class="food-item">
+                            <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400&h=300&fit=crop&crop=center" alt="Butter Chicken">
+                            <div class="food-label">Butter Chicken</div>
                         </div>
-                        <div class="profile-glow"></div>
+                        <div class="food-item">
+                            <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&h=300&fit=crop&crop=center" alt="Biryani">
+                            <div class="food-label">Biryani</div>
+                        </div>
+                        <div class="food-item">
+                            <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=400&h=300&fit=crop&crop=center" alt="Samosas">
+                            <div class="food-label">Samosas</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -75,44 +87,71 @@
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
+    <!-- Featured Dishes Section -->
+    <section id="featured" class="featured">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">About Me</h2>
-                <p class="section-subtitle">Get to know me better</p>
+                <h2 class="section-title">Our Signature Dishes</h2>
+                <p class="section-subtitle">Taste the authentic flavors of India</p>
             </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <p class="about-description">
-                        I'm a passionate full-stack developer with a love for creating efficient, 
-                        scalable, and user-friendly applications. With experience in modern web 
-                        technologies, I enjoy turning complex problems into simple, beautiful solutions.
-                    </p>
-                    <p class="about-description">
-                        When I'm not coding, you can find me exploring new technologies, contributing 
-                        to open source projects, or sharing knowledge with the developer community.
-                    </p>
-                    <div class="about-stats">
-                        <div class="stat">
-                            <h3 class="stat-number">50+</h3>
-                            <p class="stat-label">Projects Completed</p>
+            <div class="featured-grid">
+                <div class="featured-item">
+                    <div class="featured-image">
+                        <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=500&h=400&fit=crop&crop=center" alt="Butter Chicken">
+                        <div class="featured-overlay">
+                            <div class="featured-price">$18</div>
                         </div>
-                        <div class="stat">
-                            <h3 class="stat-number">3+</h3>
-                            <p class="stat-label">Years Experience</p>
-                        </div>
-                        <div class="stat">
-                            <h3 class="stat-number">100%</h3>
-                            <p class="stat-label">Client Satisfaction</p>
+                    </div>
+                    <div class="featured-content">
+                        <h3>Butter Chicken</h3>
+                        <p>Tender chicken in a rich, creamy tomato sauce with aromatic spices</p>
+                        <div class="featured-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>4.9</span>
                         </div>
                     </div>
                 </div>
-                <div class="about-image">
-                    <div class="about-card">
-                        <div class="card-content">
-                            <h4>Always Learning</h4>
-                            <p>Continuously exploring new technologies and best practices</p>
+                <div class="featured-item">
+                    <div class="featured-image">
+                        <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500&h=400&fit=crop&crop=center" alt="Biryani">
+                        <div class="featured-overlay">
+                            <div class="featured-price">$22</div>
+                        </div>
+                    </div>
+                    <div class="featured-content">
+                        <h3>Chicken Biryani</h3>
+                        <p>Fragrant basmati rice with marinated chicken and aromatic spices</p>
+                        <div class="featured-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>4.8</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="featured-item">
+                    <div class="featured-image">
+                        <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=500&h=400&fit=crop&crop=center" alt="Samosas">
+                        <div class="featured-overlay">
+                            <div class="featured-price">$8</div>
+                        </div>
+                    </div>
+                    <div class="featured-content">
+                        <h3>Vegetable Samosas</h3>
+                        <p>Crispy pastries filled with spiced potatoes and peas</p>
+                        <div class="featured-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>4.7</span>
                         </div>
                     </div>
                 </div>
@@ -120,194 +159,128 @@
         </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
+    <!-- Services Section -->
+    <section id="services" class="services">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Skills & Technologies</h2>
-                <p class="section-subtitle">Tools and technologies I work with</p>
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-subtitle">Complete catering solutions for every occasion</p>
             </div>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3 class="category-title">Frontend</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <i class="fab fa-js-square"></i>
-                            <span>JavaScript</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-react"></i>
-                            <span>React</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-vue"></i>
-                            <span>Vue.js</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-html5"></i>
-                            <span>HTML5</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-css3-alt"></i>
-                            <span>CSS3</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-sass"></i>
-                            <span>Sass</span>
-                        </div>
+            <div class="services-grid">
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="fas fa-utensils"></i>
                     </div>
+                    <h3>Wedding Catering</h3>
+                    <p>Make your special day memorable with our authentic Indian wedding feast. We handle everything from planning to execution.</p>
                 </div>
-                <div class="skill-category">
-                    <h3 class="category-title">Backend</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <i class="fab fa-node-js"></i>
-                            <span>Node.js</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-python"></i>
-                            <span>Python</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-database"></i>
-                            <span>MongoDB</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-database"></i>
-                            <span>PostgreSQL</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-aws"></i>
-                            <span>AWS</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-docker"></i>
-                            <span>Docker</span>
-                        </div>
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="fas fa-birthday-cake"></i>
                     </div>
+                    <h3>Corporate Events</h3>
+                    <p>Impress your clients and colleagues with our professional catering services for meetings, conferences, and corporate gatherings.</p>
                 </div>
-                <div class="skill-category">
-                    <h3 class="category-title">Tools & Others</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <i class="fab fa-git-alt"></i>
-                            <span>Git</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-github"></i>
-                            <span>GitHub</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-figma"></i>
-                            <span>Figma</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-terminal"></i>
-                            <span>Terminal</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-linux"></i>
-                            <span>Linux</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-code"></i>
-                            <span>VS Code</span>
-                        </div>
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="fas fa-home"></i>
                     </div>
+                    <h3>Private Parties</h3>
+                    <p>From intimate dinner parties to large celebrations, we bring authentic Indian flavors to your home.</p>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3>Delivery Service</h3>
+                    <p>Fresh, hot meals delivered to your doorstep. Perfect for office lunches or family dinners.</p>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Vegetarian Options</h3>
+                    <p>Extensive vegetarian and vegan menu options prepared with the same care and authentic spices.</p>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Custom Menus</h3>
+                    <p>We work with you to create custom menus that suit your taste preferences and dietary requirements.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Featured Projects</h2>
-                <p class="section-subtitle">Some of my recent work</p>
+                <h2 class="section-title">What Our Customers Say</h2>
+                <p class="section-subtitle">Real feedback from satisfied customers</p>
             </div>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=500&fit=crop&crop=center" alt="E-Commerce Platform">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">E-Commerce Platform</h3>
-                        <p class="project-description">
-                            A full-stack e-commerce application built with React, Node.js, and MongoDB. 
-                            Features include user authentication, payment processing, and admin dashboard.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Node.js</span>
-                            <span class="tech-tag">MongoDB</span>
-                            <span class="tech-tag">Stripe</span>
+            <div class="testimonials-grid">
+                <div class="testimonial-item">
+                    <div class="testimonial-content">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
                         </div>
-                        <div class="project-links">
-                            <a href="https://parampateldev.github.io/ecommerce-platform" target="_blank" rel="noopener" class="project-link live-demo">
-                                <i class="fas fa-external-link-alt"></i>
-                                Live Demo
-                            </a>
-                            <a href="https://github.com/parampateldev/ecommerce-platform" target="_blank" rel="noopener" class="project-link github">
-                                <i class="fab fa-github"></i>
-                                GitHub
-                            </a>
+                        <p>"Nivas Kitchen made our wedding absolutely perfect! The food was authentic, delicious, and beautifully presented. Our guests are still talking about it months later."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face" alt="Sarah Johnson">
+                        </div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <span>Wedding Client</span>
                         </div>
                     </div>
                 </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&h=500&fit=crop&crop=center" alt="Task Manager">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Task Management App</h3>
-                        <p class="project-description">
-                            A collaborative task management tool with real-time updates, drag-and-drop 
-                            functionality, and team collaboration features.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Vue.js</span>
-                            <span class="tech-tag">Express</span>
-                            <span class="tech-tag">Socket.io</span>
-                            <span class="tech-tag">PostgreSQL</span>
+                <div class="testimonial-item">
+                    <div class="testimonial-content">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
                         </div>
-                        <div class="project-links">
-                            <a href="https://parampateldev.github.io/task-manager" target="_blank" rel="noopener" class="project-link live-demo">
-                                <i class="fas fa-external-link-alt"></i>
-                                Live Demo
-                            </a>
-                            <a href="https://github.com/parampateldev/task-manager" target="_blank" rel="noopener" class="project-link github">
-                                <i class="fab fa-github"></i>
-                                GitHub
-                            </a>
+                        <p>"Outstanding service for our corporate event! Professional, punctual, and the food was exceptional. Highly recommend for any business gathering."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face" alt="Michael Chen">
+                        </div>
+                        <div class="author-info">
+                            <h4>Michael Chen</h4>
+                            <span>Corporate Client</span>
                         </div>
                     </div>
                 </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=800&h=500&fit=crop&crop=center" alt="Weather Dashboard">
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Weather Dashboard</h3>
-                        <p class="project-description">
-                            A responsive weather application with location-based forecasts, 
-                            interactive maps, and detailed weather analytics.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">API</span>
-                            <span class="tech-tag">CSS3</span>
-                            <span class="tech-tag">Chart.js</span>
+                <div class="testimonial-item">
+                    <div class="testimonial-content">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
                         </div>
-                        <div class="project-links">
-                            <a href="https://parampateldev.github.io/weather-dashboard" target="_blank" rel="noopener" class="project-link live-demo">
-                                <i class="fas fa-external-link-alt"></i>
-                                Live Demo
-                            </a>
-                            <a href="https://github.com/parampateldev/weather-dashboard" target="_blank" rel="noopener" class="project-link github">
-                                <i class="fab fa-github"></i>
-                                GitHub
-                            </a>
+                        <p>"The best Indian food in town! Fresh ingredients, authentic flavors, and excellent customer service. We order from them regularly."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face" alt="Priya Patel">
+                        </div>
+                        <div class="author-info">
+                            <h4>Priya Patel</h4>
+                            <span>Regular Customer</span>
                         </div>
                     </div>
                 </div>
@@ -320,35 +293,26 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Get In Touch</h2>
-                <p class="section-subtitle">Let's work together on something amazing</p>
+                <p class="section-subtitle">Ready to plan your next event? Let's discuss your catering needs</p>
             </div>
             <div class="contact-content">
                 <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Phone</h4>
+                            <p>(555) 123-4567</p>
+                        </div>
+                    </div>
                     <div class="contact-item">
                         <div class="contact-icon">
                             <i class="fas fa-envelope"></i>
                         </div>
                         <div class="contact-details">
                             <h4>Email</h4>
-                            <p>parampat@umich.edu</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fab fa-linkedin"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>LinkedIn</h4>
-                            <p>linkedin.com/in/parampat</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fab fa-github"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>GitHub</h4>
-                            <p>github.com/parampateldev</p>
+                            <p>info@nivaskitchen.com</p>
                         </div>
                     </div>
                     <div class="contact-item">
@@ -357,7 +321,16 @@
                         </div>
                         <div class="contact-details">
                             <h4>Location</h4>
-                            <p>Available Worldwide</p>
+                            <p>123 Spice Street, Flavor City, FC 12345</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Hours</h4>
+                            <p>Mon-Sun: 9:00 AM - 10:00 PM</p>
                         </div>
                     </div>
                 </div>
@@ -370,12 +343,22 @@
                             <input type="email" id="email" name="email" placeholder="Your Email" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                            <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
                         </div>
                         <div class="form-group">
-                            <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+                            <select id="event-type" name="event-type" required>
+                                <option value="">Select Event Type</option>
+                                <option value="wedding">Wedding</option>
+                                <option value="corporate">Corporate Event</option>
+                                <option value="private">Private Party</option>
+                                <option value="delivery">Delivery</option>
+                                <option value="other">Other</option>
+                            </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Tell us about your event and catering needs" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Inquiry</button>
                     </form>
                 </div>
             </div>
@@ -386,23 +369,56 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-text">
-                    <p>&copy; 2025 Param Patel. All rights reserved.</p>
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-utensils"></i>
+                        <span>Nivas Kitchen</span>
+                    </div>
+                    <p>Bringing authentic Indian flavors to your special events. Experience the taste of tradition with our premium catering services.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="footer-social">
-                    <a href="#" class="social-link">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="#" class="social-link">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="#" class="social-link">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="social-link">
-                        <i class="fab fa-instagram"></i>
-                    </a>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="order.html">Order</a></li>
+                    </ul>
                 </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#">Wedding Catering</a></li>
+                        <li><a href="#">Corporate Events</a></li>
+                        <li><a href="#">Private Parties</a></li>
+                        <li><a href="#">Delivery Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                        <p><i class="fas fa-envelope"></i> info@nivaskitchen.com</p>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Spice Street, Flavor City</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nivas Kitchen. All rights reserved.</p>
             </div>
         </div>
     </footer>

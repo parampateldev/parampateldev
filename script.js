@@ -430,6 +430,217 @@ class PerformanceOptimizer {
     }
 }
 
+// Cart Management
+class CartManager {
+    constructor() {
+        this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+        this.init();
+    }
+
+    init() {
+        this.bindEvents();
+        this.updateCartDisplay();
+    }
+
+    bindEvents() {
+        // Add to cart buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('add-to-cart-btn')) {
+                const item = e.target.closest('.quick-item');
+                const name = item.querySelector('h3').textContent;
+                const price = parseFloat(item.dataset.price);
+                this.addToCart(name, price);
+            }
+        });
+
+        // Quantity controls
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('quantity-btn')) {
+                const item = e.target.closest('.cart-item');
+                const name = item.dataset.item;
+                const isIncrease = e.target.classList.contains('increase');
+                this.updateQuantity(name, isIncrease ? 1 : -1);
+            }
+        });
+
+        // Remove item
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('remove-item')) {
+                const item = e.target.closest('.cart-item');
+                const name = item.dataset.item;
+                this.removeFromCart(name);
+            }
+        });
+    }
+
+    addToCart(name, price) {
+        const existingItem = this.cart.find(item => item.name === name);
+        
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            this.cart.push({
+                name: name,
+                price: price,
+                quantity: 1
+            });
+        }
+        
+        this.saveCart();
+        this.updateCartDisplay();
+        this.showNotification(`${name} added to cart!`);
+    }
+
+    updateQuantity(name, change) {
+        const item = this.cart.find(item => item.name === name);
+        
+        if (item) {
+            item.quantity += change;
+            
+            if (item.quantity <= 0) {
+                this.removeFromCart(name);
+            } else {
+                this.saveCart();
+                this.updateCartDisplay();
+            }
+        }
+    }
+
+    removeFromCart(name) {
+        this.cart = this.cart.filter(item => item.name !== name);
+        this.saveCart();
+        this.updateCartDisplay();
+        this.showNotification(`${name} removed from cart!`);
+    }
+
+    saveCart() {
+        localStorage.setItem('cart', JSON.stringify(this.cart));
+    }
+
+    updateCartDisplay() {
+        const cartItems = document.getElementById('cart-items');
+        const cartSummary = document.getElementById('cart-summary');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        
+        if (!cartItems) return;
+
+        if (this.cart.length === 0) {
+            cartItems.innerHTML = `
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <p>Your cart is empty</p>
+                    <p>Add items from our menu to get started</p>
+                </div>
+            `;
+            cartSummary.style.display = 'none';
+            checkoutBtn.disabled = true;
+        } else {
+            cartItems.innerHTML = this.cart.map(item => `
+                <div class="cart-item" data-item="${item.name}">
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <p>$${item.price.toFixed(2)} each</p>
+                    </div>
+                    <div class="cart-item-controls">
+                        <button class="quantity-btn decrease">-</button>
+                        <span class="quantity">${item.quantity}</span>
+                        <button class="quantity-btn increase">+</button>
+                        <button class="remove-item" style="margin-left: 1rem; color: var(--accent-red); background: none; border: none; cursor: pointer;">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <div class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+                </div>
+            `).join('');
+
+            this.updateCartSummary();
+            cartSummary.style.display = 'block';
+            checkoutBtn.disabled = false;
+        }
+    }
+
+    updateCartSummary() {
+        const subtotal = this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const serviceCharge = subtotal * 0.1;
+        const deliveryFee = subtotal > 50 ? 0 : 10;
+        const total = subtotal + serviceCharge + deliveryFee;
+
+        document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+        document.getElementById('service-charge').textContent = `$${serviceCharge.toFixed(2)}`;
+        document.getElementById('delivery-fee').textContent = `$${deliveryFee.toFixed(2)}`;
+        document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+    }
+
+    showNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.textContent = message;
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--accent-primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-lg);
+            z-index: 9999;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 100);
+
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+}
+
+// Menu Tab Management
+class MenuTabManager {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const menuSections = document.querySelectorAll('.menu-section');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                
+                // Update active tab
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Show/hide sections
+                menuSections.forEach(section => {
+                    if (section.id === category) {
+                        section.style.display = 'block';
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Show first section by default
+        if (menuSections.length > 0) {
+            menuSections[0].style.display = 'block';
+        }
+    }
+}
+
 // Initialize all components when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize all managers
@@ -440,6 +651,8 @@ document.addEventListener('DOMContentLoaded', () => {
     new TypingAnimation();
     new ParticleBackground();
     new PerformanceOptimizer();
+    new CartManager();
+    new MenuTabManager();
 
     // Add some interactive effects
     addSkillHoverEffects();

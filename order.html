@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order - Nivas Kitchen</title>
+    <meta name="description" content="Place your order for authentic Indian food catering. Choose from our extensive menu and customize your order for any occasion.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <i class="fas fa-utensils"></i>
+                    Nivas Kitchen
+                </a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="menu.html" class="nav-link">Menu</a>
+                <a href="order.html" class="nav-link active">Order</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <div class="theme-toggle">
+                <button id="theme-toggle" class="theme-btn">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="order-hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Place Your Order</h1>
+                <p class="hero-subtitle">Choose from our delicious menu and we'll bring the flavors of India to you</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Form Section -->
+    <section class="order-section">
+        <div class="container">
+            <div class="order-content">
+                <!-- Order Form -->
+                <div class="order-form-container">
+                    <h2>Order Details</h2>
+                    <form id="order-form" class="order-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="event-type">Event Type *</label>
+                                <select id="event-type" name="event-type" required>
+                                    <option value="">Select Event Type</option>
+                                    <option value="wedding">Wedding</option>
+                                    <option value="corporate">Corporate Event</option>
+                                    <option value="private">Private Party</option>
+                                    <option value="delivery">Home Delivery</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="guest-count">Number of Guests *</label>
+                                <input type="number" id="guest-count" name="guest-count" min="1" max="500" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="event-date">Event Date *</label>
+                                <input type="date" id="event-date" name="event-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="event-time">Event Time *</label>
+                                <input type="time" id="event-time" name="event-time" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="delivery-address">Delivery Address *</label>
+                            <textarea id="delivery-address" name="delivery-address" rows="3" placeholder="Enter complete delivery address" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="special-requests">Special Requests or Dietary Restrictions</label>
+                            <textarea id="special-requests" name="special-requests" rows="3" placeholder="Any special dietary requirements or requests"></textarea>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="cart-container">
+                    <h2>Your Order</h2>
+                    <div class="cart-items" id="cart-items">
+                        <div class="empty-cart">
+                            <i class="fas fa-shopping-cart"></i>
+                            <p>Your cart is empty</p>
+                            <p>Add items from our menu to get started</p>
+                        </div>
+                    </div>
+                    
+                    <div class="cart-summary" id="cart-summary" style="display: none;">
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Service Charge (10%):</span>
+                            <span id="service-charge">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Delivery Fee:</span>
+                            <span id="delivery-fee">$0.00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="total">$0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="cart-actions">
+                        <a href="menu.html" class="btn btn-secondary">Add More Items</a>
+                        <button id="checkout-btn" class="btn btn-primary" disabled>Proceed to Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Menu Section -->
+    <section class="quick-menu">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Quick Add to Cart</h2>
+                <p class="section-subtitle">Add popular items to your order</p>
+            </div>
+            <div class="quick-menu-grid">
+                <div class="quick-item" data-item="butter-paneer" data-price="16">
+                    <div class="quick-item-image">
+                        <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=200&h=150&fit=crop&crop=center" alt="Butter Paneer">
+                    </div>
+                    <div class="quick-item-content">
+                        <h3>Butter Paneer</h3>
+                        <p class="price">$16</p>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="quick-item" data-item="pav-bhaji" data-price="12">
+                    <div class="quick-item-image">
+                        <img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=200&h=150&fit=crop&crop=center" alt="Pav Bhaji">
+                    </div>
+                    <div class="quick-item-content">
+                        <h3>Pav Bhaji</h3>
+                        <p class="price">$12</p>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="quick-item" data-item="vegetable-samosas" data-price="8">
+                    <div class="quick-item-image">
+                        <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=200&h=150&fit=crop&crop=center" alt="Vegetable Samosas">
+                    </div>
+                    <div class="quick-item-content">
+                        <h3>Vegetable Samosas</h3>
+                        <p class="price">$8</p>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="quick-item" data-item="palak-paneer" data-price="16">
+                    <div class="quick-item-image">
+                        <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=200&h=150&fit=crop&crop=center" alt="Palak Paneer">
+                    </div>
+                    <div class="quick-item-content">
+                        <h3>Palak Paneer</h3>
+                        <p class="price">$16</p>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="quick-item" data-item="vegetable-biryani" data-price="18">
+                    <div class="quick-item-image">
+                        <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=200&h=150&fit=crop&crop=center" alt="Vegetable Biryani">
+                    </div>
+                    <div class="quick-item-content">
+                        <h3>Vegetable Biryani</h3>
+                        <p class="price">$18</p>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="quick-item" data-item="naan-bread" data-price="4">
+                    <div class="quick-item-image">
+                        <img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=200&h=150&fit=crop&crop=center" alt="Naan Bread">
+                    </div>
+                    <div class="quick-item-content">
+                        <h3>Naan Bread</h3>
+                        <p class="price">$4</p>
+                        <button class="add-to-cart-btn">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Information -->
+    <section class="order-contact">
+        <div class="container">
+            <div class="contact-info">
+                <h2>Need Help with Your Order?</h2>
+                <p>Our team is here to help you plan the perfect meal for your event.</p>
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Call Us</h3>
+                            <p>(555) 123-4567</p>
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email Us</h3>
+                            <p>orders@nivaskitchen.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>Order Hours</h3>
+                            <p>Mon-Sun: 9:00 AM - 10:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-utensils"></i>
+                        <span>Nivas Kitchen</span>
+                    </div>
+                    <p>Bringing authentic Indian flavors to your special events. Experience the taste of tradition with our premium catering services.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="order.html">Order</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#">Wedding Catering</a></li>
+                        <li><a href="#">Corporate Events</a></li>
+                        <li><a href="#">Private Parties</a></li>
+                        <li><a href="#">Delivery Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                        <p><i class="fas fa-envelope"></i> info@nivaskitchen.com</p>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Spice Street, Flavor City</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nivas Kitchen. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
