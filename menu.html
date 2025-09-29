@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Nivas Kitchen</title>
+    <meta name="description" content="Explore our comprehensive menu featuring authentic Indian dishes, from traditional curries to modern fusion cuisine. Vegetarian and non-vegetarian options available.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <i class="fas fa-utensils"></i>
+                    Nivas Kitchen
+                </a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="menu.html" class="nav-link active">Menu</a>
+                <a href="order.html" class="nav-link">Order</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <div class="theme-toggle">
+                <button id="theme-toggle" class="theme-btn">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="menu-hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Our Menu</h1>
+                <p class="hero-subtitle">Discover the authentic flavors of India</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Categories -->
+    <section class="menu-categories">
+        <div class="container">
+            <div class="category-tabs">
+                <button class="tab-btn active" data-category="appetizers">Appetizers</button>
+                <button class="tab-btn" data-category="mains">Main Courses</button>
+                <button class="tab-btn" data-category="rice">Rice & Breads</button>
+                <button class="tab-btn" data-category="desserts">Desserts</button>
+                <button class="tab-btn" data-category="beverages">Beverages</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appetizers -->
+    <section class="menu-section" id="appetizers">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Appetizers</h2>
+                <p class="section-subtitle">Start your meal with these delicious bites</p>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=300&h=200&fit=crop&crop=center" alt="Vegetable Samosas">
+                    </div>
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <h3>Vegetable Samosas</h3>
+                            <span class="price">$8</span>
+                        </div>
+                        <p>Crispy pastries filled with spiced potatoes, peas, and aromatic spices. Served with tamarind chutney.</p>
+                        <div class="menu-tags">
+                            <span class="tag vegetarian">Vegetarian</span>
+                            <span class="tag spicy">Spicy</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=300&h=200&fit=crop&crop=center" alt="Paneer Tikka">
+                    </div>
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <h3>Paneer Tikka</h3>
+                            <span class="price">$12</span>
+                        </div>
+                        <p>Fresh cottage cheese marinated in yogurt and spices, grilled to perfection in our tandoor oven.</p>
+                        <div class="menu-tags">
+                            <span class="tag vegetarian">Vegetarian</span>
+                            <span class="tag tandoor">Tandoor</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=300&h=200&fit=crop&crop=center" alt="Paneer Pakora">
+                    </div>
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <h3>Paneer Pakora</h3>
+                            <span class="price">$10</span>
+                        </div>
+                        <p>Fresh cottage cheese fritters coated in spiced chickpea batter and deep-fried until golden.</p>
+                        <div class="menu-tags">
+                            <span class="tag vegetarian">Vegetarian</span>
+                            <span class="tag fried">Fried</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=300&h=200&fit=crop&crop=center" alt="Vegetable Seekh Kebab">
+                    </div>
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <h3>Vegetable Seekh Kebab</h3>
+                            <span class="price">$12</span>
+                        </div>
+                        <p>Mixed vegetables and paneer mixed with aromatic spices, shaped on skewers and grilled in the tandoor.</p>
+                        <div class="menu-tags">
+                            <span class="tag vegetarian">Vegetarian</span>
+                            <span class="tag tandoor">Tandoor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Courses -->
+    <section class="menu-section" id="mains">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Main Courses</h2>
+                <p class="section-subtitle">Our signature curries and traditional dishes</p>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-item featured">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=300&h=200&fit=crop&crop=center" alt="Butter Paneer">
+                        <div class="featured-badge">Chef's Special</div>
+                    </div>
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <h3>Butter Paneer</h3>
+                            <span class="price">$16</span>
+                        </div>
+                        <p>Fresh cottage cheese in a rich, creamy tomato sauce with aromatic spices. Our most popular dish!</p>
+                        <div class="menu-tags">
+                            <span class="tag vegetarian">Vegetarian</span>
+                            <span class="tag mild">Mild</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=300&h=200&fit=crop&crop=center" alt="Pav Bhaji">
+                    </div>
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <h3>Pav Bhaji</h3>
+                            <span class="price">$12</span>
+                        </div>
+                        <p>Spiced vegetable curry served with soft buttered bread rolls. A Mumbai street food favorite!</p>
+                        <div class="menu-tags">
+                            <span class="tag vegetarian">Vegetarian</span>
+                            <span class="tag spicy">Spicy</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=300&h=200&fit=crop&crop=center" alt="Palak Paneer">
+                    </div>
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <h3>Palak Paneer</h3>
+                            <span class="price">$16</span>
+                        </div>
+                        <p>Fresh cottage cheese in a creamy spinach curry with aromatic spices and herbs.</p>
+                        <div class="menu-tags">
+                            <span class="tag vegetarian">Vegetarian</span>
+                            <span class="tag healthy">Healthy</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=300&h=200&fit=crop&crop=center" alt="Aloo Gobi">
+                    </div>
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <h3>Aloo Gobi</h3>
+                            <span class="price">$14</span>
+                        </div>
+                        <p>Spiced potatoes and cauliflower curry with aromatic spices. A classic North Indian dish!</p>
+                        <div class="menu-tags">
+                            <span class="tag vegetarian">Vegetarian</span>
+                            <span class="tag mild">Mild</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rice & Breads -->
+    <section class="menu-section" id="rice">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Rice & Breads</h2>
+                <p class="section-subtitle">Perfect accompaniments to your meal</p>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-item featured">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=300&h=200&fit=crop&crop=center" alt="Vegetable Biryani">
+                        <div class="featured-badge">Popular</div>
+                    </div>
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <h3>Vegetable Biryani</h3>
+                            <span class="price">$18</span>
+                        </div>
+                        <p>Fragrant basmati rice with mixed vegetables, aromatic spices, and saffron. Served with raita.</p>
+                        <div class="menu-tags">
+                            <span class="tag vegetarian">Vegetarian</span>
+                            <span class="tag aromatic">Aromatic</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=300&h=200&fit=crop&crop=center" alt="Jeera Rice">
+                    </div>
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <h3>Jeera Rice</h3>
+                            <span class="price">$8</span>
+                        </div>
+                        <p>Fragrant basmati rice cooked with cumin seeds and aromatic spices.</p>
+                        <div class="menu-tags">
+                            <span class="tag vegetarian">Vegetarian</span>
+                            <span class="tag mild">Mild</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=300&h=200&fit=crop&crop=center" alt="Naan Bread">
+                    </div>
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <h3>Naan Bread</h3>
+                            <span class="price">$4</span>
+                        </div>
+                        <p>Soft, fluffy bread baked in our tandoor oven. Perfect for scooping up curries.</p>
+                        <div class="menu-tags">
+                            <span class="tag vegetarian">Vegetarian</span>
+                            <span class="tag tandoor">Tandoor</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=300&h=200&fit=crop&crop=center" alt="Garlic Naan">
+                    </div>
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <h3>Garlic Naan</h3>
+                            <span class="price">$5</span>
+                        </div>
+                        <p>Naan bread topped with fresh garlic and herbs, baked to perfection in the tandoor.</p>
+                        <div class="menu-tags">
+                            <span class="tag vegetarian">Vegetarian</span>
+                            <span class="tag tandoor">Tandoor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Desserts -->
+    <section class="menu-section" id="desserts">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Desserts</h2>
+                <p class="section-subtitle">Sweet endings to your meal</p>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=300&h=200&fit=crop&crop=center" alt="Gulab Jamun">
+                    </div>
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <h3>Gulab Jamun</h3>
+                            <span class="price">$6</span>
+                        </div>
+                        <p>Soft, spongy milk dumplings soaked in rose-flavored sugar syrup. A classic Indian dessert.</p>
+                        <div class="menu-tags">
+                            <span class="tag vegetarian">Vegetarian</span>
+                            <span class="tag sweet">Sweet</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=300&h=200&fit=crop&crop=center" alt="Kheer">
+                    </div>
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <h3>Kheer</h3>
+                            <span class="price">$5</span>
+                        </div>
+                        <p>Traditional rice pudding with cardamom, nuts, and saffron. Served chilled.</p>
+                        <div class="menu-tags">
+                            <span class="tag vegetarian">Vegetarian</span>
+                            <span class="tag cold">Cold</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-image">
+                        <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=300&h=200&fit=crop&crop=center" alt="Ras Malai">
+                    </div>
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <h3>Ras Malai</h3>
+                            <span class="price">$7</span>
+                        </div>
+                        <p>Soft cottage cheese dumplings in sweetened, flavored milk with pistachios.</p>
+                        <div class="menu-tags">
+                            <span class="tag vegetarian">Vegetarian</span>
+                            <span class="tag cold">Cold</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beverages -->
+    <section class="menu-section" id="beverages">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Beverages</h2>
+                <p class="section-subtitle">Refreshing drinks to complement your meal</p>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <h3>Mango Lassi</h3>
+                            <span class="price">$4</span>
+                        </div>
+                        <p>Sweet yogurt drink with fresh mango puree. Refreshing and creamy.</p>
+                        <div class="menu-tags">
+                            <span class="tag vegetarian">Vegetarian</span>
+                            <span class="tag cold">Cold</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <h3>Masala Chai</h3>
+                            <span class="price">$3</span>
+                        </div>
+                        <p>Traditional spiced tea with cardamom, cinnamon, and ginger.</p>
+                        <div class="menu-tags">
+                            <span class="tag vegetarian">Vegetarian</span>
+                            <span class="tag hot">Hot</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <h3>Fresh Lime Soda</h3>
+                            <span class="price">$3</span>
+                        </div>
+                        <p>Refreshing lime soda with a hint of salt and spices.</p>
+                        <div class="menu-tags">
+                            <span class="tag vegetarian">Vegetarian</span>
+                            <span class="tag cold">Cold</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Order?</h2>
+                <p>Experience the authentic flavors of India delivered to your door or at your event.</p>
+                <div class="cta-buttons">
+                    <a href="order.html" class="btn btn-primary">Place an Order</a>
+                    <a href="index.html#contact" class="btn btn-secondary">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-utensils"></i>
+                        <span>Nivas Kitchen</span>
+                    </div>
+                    <p>Bringing authentic Indian flavors to your special events. Experience the taste of tradition with our premium catering services.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="menu.html">Menu</a></li>
+                        <li><a href="order.html">Order</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#">Wedding Catering</a></li>
+                        <li><a href="#">Corporate Events</a></li>
+                        <li><a href="#">Private Parties</a></li>
+                        <li><a href="#">Delivery Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                        <p><i class="fas fa-envelope"></i> info@nivaskitchen.com</p>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Spice Street, Flavor City</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Nivas Kitchen. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
