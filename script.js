@@ -12,7 +12,7 @@ const contactForm = document.getElementById('contact-form');
 // Theme Management
 class ThemeManager {
     constructor() {
-        this.currentTheme = localStorage.getItem('theme') || 'light';
+        this.currentTheme = localStorage.getItem('theme') || 'dark';
         this.init();
     }
 
