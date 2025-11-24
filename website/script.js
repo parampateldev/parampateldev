@@ -279,7 +279,8 @@ class TypingAnimation {
     }
 
     init() {
-        const heroTitle = document.querySelector('.hero-title');
+        // Support both .hero-name (portfolio) and .hero-title (other pages)
+        const heroTitle = document.querySelector('.hero-name') || document.querySelector('.hero-title');
         if (heroTitle) {
             this.animateTitle(heroTitle);
         }
@@ -438,6 +439,10 @@ class CartManager {
     }
 
     init() {
+        // Only initialize if cart elements exist
+        if (!document.getElementById('cart-items')) {
+            return;
+        }
         this.bindEvents();
         this.updateCartDisplay();
     }
@@ -614,6 +619,11 @@ class MenuTabManager {
         const tabBtns = document.querySelectorAll('.tab-btn');
         const menuSections = document.querySelectorAll('.menu-section');
 
+        // Only initialize if menu elements exist
+        if (tabBtns.length === 0 || menuSections.length === 0) {
+            return;
+        }
+
         tabBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const category = btn.dataset.category;
@@ -643,16 +653,27 @@ class MenuTabManager {
 
 // Initialize all components when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize all managers
+    // Initialize core managers (always needed)
     new ThemeManager();
     new NavigationManager();
     new AnimationManager();
     new ContactFormManager();
     new TypingAnimation();
-    new ParticleBackground();
     new PerformanceOptimizer();
-    new CartManager();
-    new MenuTabManager();
+
+    // Initialize optional features conditionally
+    // Particle background (can be disabled for minimalist design)
+    if (document.querySelector('.hero')) {
+        new ParticleBackground();
+    }
+
+    // Cart and menu managers (only for menu/order pages)
+    if (document.getElementById('cart-items')) {
+        new CartManager();
+    }
+    if (document.querySelector('.tab-btn')) {
+        new MenuTabManager();
+    }
 
     // Add some interactive effects
     addSkillHoverEffects();
