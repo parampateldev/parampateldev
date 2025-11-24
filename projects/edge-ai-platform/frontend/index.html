@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EdgeAI - Edge Computing AI Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #2e1a2e 50%, #3e1621 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 0, 128, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 128, 0.3);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #ff0080, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff0080, #00d4ff);
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .control-panel {
+            background: rgba(255, 0, 128, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 128, 0.2);
+        }
+
+        .control-panel h2 {
+            color: #ff0080;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #b0b0b0;
+            font-weight: 500;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff0080, #00d4ff);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 0, 128, 0.3);
+        }
+
+        .monitoring-panel {
+            background: rgba(255, 0, 128, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 128, 0.2);
+        }
+
+        .monitoring-panel h2 {
+            color: #ff0080;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .devices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .device-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .device-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 0, 128, 0.2);
+        }
+
+        .device-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff0080, #00d4ff);
+        }
+
+        .device-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .status-online { background: rgba(0, 255, 136, 0.3); color: #00ff88; }
+        .status-offline { background: rgba(255, 0, 0, 0.3); color: #ff4444; }
+        .status-loading { background: rgba(255, 255, 0, 0.3); color: #ffff00; }
+
+        .device-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e0e0e0;
+            margin-bottom: 5px;
+        }
+
+        .device-specs {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .performance-metrics {
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            border-left: 4px solid #00d4ff;
+        }
+
+        .performance-metrics h4 {
+            color: #00d4ff;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .performance-metrics p {
+            color: #e0e0e0;
+            font-size: 0.8rem;
+            margin: 2px 0;
+        }
+
+        .metrics-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .metrics-section h2 {
+            color: #ff0080;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(255, 0, 128, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 0, 128, 0.3);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff0080;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #ff0080;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 0, 128, 0.3);
+            border-top: 3px solid #ff0080;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .network-topology {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 0, 128, 0.3);
+            text-align: center;
+        }
+
+        .network-topology h3 {
+            color: #ff0080;
+            margin-bottom: 15px;
+        }
+
+        .edge-node {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff0080, #00d4ff);
+            margin: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #000;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ EdgeAI</h1>
+            <p>Revolutionary Edge Computing AI Platform</p>
+            <span class="status-badge">REVOLUTIONARY STARTUP</span>
+        </div>
+
+        <div class="dashboard">
+            <div class="control-panel">
+                <h2>🎛️ Edge Controls</h2>
+                
+                <div class="input-group">
+                    <label for="modelSelect">AI Model</label>
+                    <select id="modelSelect">
+                        <option value="image_classifier">Image Classifier</option>
+                        <option value="object_detector">Object Detector</option>
+                        <option value="speech_recognition">Speech Recognition</option>
+                        <option value="anomaly_detector">Anomaly Detector</option>
+                        <option value="predictive_maintenance">Predictive Maintenance</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="deviceSelect">Target Device</label>
+                    <select id="deviceSelect">
+                        <option value="jetson_nano">NVIDIA Jetson Nano</option>
+                        <option value="raspberry_pi">Raspberry Pi 4</option>
+                        <option value="intel_ncs">Intel Neural Compute Stick</option>
+                        <option value="edge_server">Edge Server</option>
+                    </select>
+                </div>
+
+                <button class="btn" onclick="deployModel()">🚀 Deploy Model</button>
+                <button class="btn" onclick="runInference()">🧠 Run Inference</button>
+                <button class="btn" onclick="updateModels()">🔄 Update Models</button>
+                <button class="btn" onclick="refreshStatus()">📊 Refresh Status</button>
+            </div>
+
+            <div class="monitoring-panel">
+                <h2>📊 Performance Monitoring</h2>
+                <div class="chart-container">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Processing edge AI inference...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="devices-grid" id="devicesGrid">
+            <!-- Edge devices will be loaded here -->
+        </div>
+
+        <div class="metrics-section">
+            <h2>📈 System Metrics</h2>
+            <div class="metrics-grid" id="systemMetrics">
+                <div class="metric-card">
+                    <div class="metric-value" id="totalDevices">0</div>
+                    <div class="metric-label">Active Devices</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="avgLatency">0ms</div>
+                    <div class="metric-label">Avg Latency</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="inferenceRate">0</div>
+                    <div class="metric-label">Inferences/sec</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="modelAccuracy">0%</div>
+                    <div class="metric-label">Model Accuracy</div>
+                </div>
+            </div>
+            
+            <div class="network-topology">
+                <h3>🌐 Edge Network Topology</h3>
+                <div class="edge-node">Cloud</div>
+                <div class="edge-node">Edge<br/>Server</div>
+                <div class="edge-node">Jetson<br/>Nano</div>
+                <div class="edge-node">RPi<br/>4</div>
+                <div class="edge-node">Intel<br/>NCS</div>
+                <div class="edge-node">IoT<br/>Device</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let performanceChart;
+        let edgeDevices = [];
+
+        // Initialize performance chart
+        function initPerformanceChart() {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            performanceChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Inference Latency (ms)',
+                        data: [],
+                        borderColor: '#ff0080',
+                        backgroundColor: 'rgba(255, 0, 128, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Throughput (inferences/sec)',
+                        data: [],
+                        borderColor: '#00d4ff',
+                        backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#e0e0e0'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#b0b0b0'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#b0b0b0'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize edge devices
+        function initializeEdgeDevices() {
+            const devices = [
+                {
+                    id: 'jetson_nano_1',
+                    name: 'NVIDIA Jetson Nano #1',
+                    status: 'online',
+                    specs: 'ARM Cortex-A57, 4GB RAM',
+                    latency: '8ms',
+                    throughput: '45 fps',
+                    temperature: '65°C',
+                    memory: '2.1GB/4GB'
+                },
+                {
+                    id: 'raspberry_pi_1',
+                    name: 'Raspberry Pi 4 #1',
+                    status: 'online',
+                    specs: 'ARM Cortex-A72, 8GB RAM',
+                    latency: '15ms',
+                    throughput: '25 fps',
+                    temperature: '58°C',
+                    memory: '5.2GB/8GB'
+                },
+                {
+                    id: 'intel_ncs_1',
+                    name: 'Intel Neural Compute Stick #1',
+                    status: 'online',
+                    specs: 'Intel Movidius VPU',
+                    latency: '12ms',
+                    throughput: '35 fps',
+                    temperature: '45°C',
+                    memory: '128MB'
+                },
+                {
+                    id: 'edge_server_1',
+                    name: 'Edge Server #1',
+                    status: 'online',
+                    specs: 'Intel Xeon, 32GB RAM',
+                    latency: '3ms',
+                    throughput: '120 fps',
+                    temperature: '72°C',
+                    memory: '18.5GB/32GB'
+                },
+                {
+                    id: 'jetson_nano_2',
+                    name: 'NVIDIA Jetson Nano #2',
+                    status: 'offline',
+                    specs: 'ARM Cortex-A57, 4GB RAM',
+                    latency: 'N/A',
+                    throughput: 'N/A',
+                    temperature: 'N/A',
+                    memory: 'N/A'
+                },
+                {
+                    id: 'iot_device_1',
+                    name: 'IoT Device #1',
+                    status: 'loading',
+                    specs: 'ARM Cortex-M4, 256KB RAM',
+                    latency: '25ms',
+                    throughput: '8 fps',
+                    temperature: '42°C',
+                    memory: '180KB/256KB'
+                }
+            ];
+
+            edgeDevices = devices;
+            displayEdgeDevices();
+        }
+
+        // Display edge devices
+        function displayEdgeDevices() {
+            const grid = document.getElementById('devicesGrid');
+            grid.innerHTML = '';
+            
+            edgeDevices.forEach(device => {
+                const card = document.createElement('div');
+                card.className = 'device-card';
+                card.innerHTML = `
+                    <div class="device-status status-${device.status}">${device.status.toUpperCase()}</div>
+                    <div class="device-name">${device.name}</div>
+                    <div class="device-specs">${device.specs}</div>
+                    <div class="performance-metrics">
+                        <h4>⚡ Performance</h4>
+                        <p>Latency: ${device.latency}</p>
+                        <p>Throughput: ${device.throughput}</p>
+                        <p>Temperature: ${device.temperature}</p>
+                        <p>Memory: ${device.memory}</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Update system metrics
+        function updateSystemMetrics() {
+            const onlineDevices = edgeDevices.filter(d => d.status === 'online').length;
+            const avgLatency = edgeDevices
+                .filter(d => d.status === 'online' && d.latency !== 'N/A')
+                .reduce((sum, d) => sum + parseFloat(d.latency), 0) / onlineDevices || 0;
+            
+            const totalThroughput = edgeDevices
+                .filter(d => d.status === 'online' && d.throughput !== 'N/A')
+                .reduce((sum, d) => sum + parseFloat(d.throughput), 0) || 0;
+            
+            document.getElementById('totalDevices').textContent = onlineDevices;
+            document.getElementById('avgLatency').textContent = `${avgLatency.toFixed(1)}ms`;
+            document.getElementById('inferenceRate').textContent = Math.round(totalThroughput);
+            document.getElementById('modelAccuracy').textContent = `${(95 + Math.random() * 5).toFixed(1)}%`;
+        }
+
+        // Update performance chart
+        function updatePerformanceChart() {
+            const labels = [];
+            const latencyData = [];
+            const throughputData = [];
+            
+            for (let i = 29; i >= 0; i--) {
+                const date = new Date();
+                date.setMinutes(date.getMinutes() - i);
+                labels.push(date.toLocaleTimeString());
+                
+                // Simulate real-time data
+                latencyData.push(5 + Math.random() * 20);
+                throughputData.push(30 + Math.random() * 40);
+            }
+            
+            performanceChart.data.labels = labels;
+            performanceChart.data.datasets[0].data = latencyData;
+            performanceChart.data.datasets[1].data = throughputData;
+            performanceChart.update();
+        }
+
+        // Deploy model
+        async function deployModel() {
+            const model = document.getElementById('modelSelect').value;
+            const device = document.getElementById('deviceSelect').value;
+            
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            
+            try {
+                // Simulate model deployment
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                alert(`Model "${model}" deployed successfully to ${device}!`);
+                
+                // Update device status
+                const deviceIndex = edgeDevices.findIndex(d => d.id === device);
+                if (deviceIndex !== -1) {
+                    edgeDevices[deviceIndex].status = 'online';
+                    displayEdgeDevices();
+                    updateSystemMetrics();
+                }
+                
+            } catch (error) {
+                alert('Model deployment failed: ' + error.message);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Run inference
+        async function runInference() {
+            const model = document.getElementById('modelSelect').value;
+            const device = document.getElementById('deviceSelect').value;
+            
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            
+            try {
+                // Simulate inference
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                const latency = (5 + Math.random() * 15).toFixed(1);
+                const confidence = (85 + Math.random() * 15).toFixed(1);
+                
+                alert(`Inference completed!\nModel: ${model}\nDevice: ${device}\nLatency: ${latency}ms\nConfidence: ${confidence}%`);
+                
+                // Update performance metrics
+                updatePerformanceChart();
+                updateSystemMetrics();
+                
+            } catch (error) {
+                alert('Inference failed: ' + error.message);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Update models
+        async function updateModels() {
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            
+            try {
+                // Simulate model update
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                
+                alert('All models updated successfully!');
+                
+                // Update all online devices
+                edgeDevices.forEach(device => {
+                    if (device.status === 'online') {
+                        device.latency = (5 + Math.random() * 10).toFixed(1) + 'ms';
+                        device.throughput = Math.round(30 + Math.random() * 20) + ' fps';
+                    }
+                });
+                
+                displayEdgeDevices();
+                updateSystemMetrics();
+                
+            } catch (error) {
+                alert('Model update failed: ' + error.message);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Refresh status
+        async function refreshStatus() {
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            
+            try {
+                // Simulate status refresh
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // Update device statuses randomly
+                edgeDevices.forEach(device => {
+                    if (Math.random() > 0.1) { // 90% chance to stay online
+                        device.status = 'online';
+                        device.temperature = (40 + Math.random() * 30).toFixed(0) + '°C';
+                    }
+                });
+                
+                displayEdgeDevices();
+                updateSystemMetrics();
+                updatePerformanceChart();
+                
+            } catch (error) {
+                alert('Status refresh failed: ' + error.message);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            initPerformanceChart();
+            initializeEdgeDevices();
+            updateSystemMetrics();
+            updatePerformanceChart();
+            
+            // Auto-refresh every 30 seconds
+            setInterval(() => {
+                updatePerformanceChart();
+                updateSystemMetrics();
+            }, 30000);
+        });
+    </script>
+</body>
+</html>

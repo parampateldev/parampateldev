@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroTrade AI - Neural Network Trading</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 0, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 255, 0.3);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #ff00ff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            margin-bottom: 20px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff00ff, #00d4ff);
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .control-panel {
+            background: rgba(255, 0, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 255, 0.2);
+        }
+
+        .control-panel h2 {
+            color: #ff00ff;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #b0b0b0;
+            font-weight: 500;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff00ff, #00d4ff);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 0, 255, 0.3);
+        }
+
+        .trading-panel {
+            background: rgba(255, 0, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 255, 0.2);
+        }
+
+        .trading-panel h2 {
+            color: #ff00ff;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .signals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .signal-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .signal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 0, 255, 0.2);
+        }
+
+        .signal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff00ff, #00d4ff);
+        }
+
+        .signal-action {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .action-buy { background: rgba(0, 255, 136, 0.3); color: #00ff88; }
+        .action-sell { background: rgba(255, 0, 0, 0.3); color: #ff4444; }
+        .action-hold { background: rgba(255, 255, 0, 0.3); color: #ffff00; }
+
+        .signal-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e0e0e0;
+            margin-bottom: 5px;
+        }
+
+        .signal-confidence {
+            color: #00d4ff;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .neural-output {
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            border-left: 4px solid #00d4ff;
+        }
+
+        .neural-output h4 {
+            color: #00d4ff;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .neural-output p {
+            color: #e0e0e0;
+            font-size: 0.8rem;
+            margin: 2px 0;
+        }
+
+        .portfolio-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .portfolio-section h2 {
+            color: #ff00ff;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(255, 0, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 0, 255, 0.3);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff00ff;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        .positive { color: #00ff88 !important; }
+        .negative { color: #ff4444 !important; }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #ff00ff;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 0, 255, 0.3);
+            border-top: 3px solid #ff00ff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .trade-history {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .trade-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #ff00ff;
+        }
+
+        .trade-item h4 {
+            color: #ff00ff;
+            margin-bottom: 5px;
+        }
+
+        .trade-item p {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        .neural-visualization {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 0, 255, 0.3);
+        }
+
+        .neural-visualization h3 {
+            color: #ff00ff;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .neural-layer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .neural-node {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff00ff, #00d4ff);
+            margin: 0 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: #000;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 NeuroTrade AI</h1>
+            <p>Neural Network Trading System</p>
+            <span class="status-badge">REVOLUTIONARY STARTUP</span>
+        </div>
+
+        <div class="dashboard">
+            <div class="control-panel">
+                <h2>🎛️ Trading Controls</h2>
+                
+                <div class="input-group">
+                    <label for="symbol">Symbol</label>
+                    <select id="symbol">
+                        <option value="AAPL">AAPL - Apple</option>
+                        <option value="GOOGL">GOOGL - Google</option>
+                        <option value="MSFT">MSFT - Microsoft</option>
+                        <option value="TSLA">TSLA - Tesla</option>
+                        <option value="BTC">BTC - Bitcoin</option>
+                        <option value="ETH">ETH - Ethereum</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" value="100" min="1">
+                </div>
+
+                <div class="input-group">
+                    <label for="orderType">Order Type</label>
+                    <select id="orderType">
+                        <option value="MARKET">Market Order</option>
+                        <option value="LIMIT">Limit Order</option>
+                    </select>
+                </div>
+
+                <button class="btn" onclick="getTradingSignal()">🧠 Get AI Signal</button>
+                <button class="btn" onclick="executeTrade('BUY')">💰 Buy</button>
+                <button class="btn" onclick="executeTrade('SELL')">📉 Sell</button>
+                <button class="btn" onclick="loadAllSignals()">🔄 Refresh All</button>
+            </div>
+
+            <div class="trading-panel">
+                <h2>📊 Neural Network Analysis</h2>
+                <div class="chart-container">
+                    <canvas id="priceChart"></canvas>
+                </div>
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Neural network processing...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="signals-grid" id="signalsGrid">
+            <!-- Trading signals will be loaded here -->
+        </div>
+
+        <div class="portfolio-section">
+            <h2>💼 Portfolio Performance</h2>
+            <div class="metrics-grid" id="portfolioMetrics">
+                <div class="metric-card">
+                    <div class="metric-value" id="totalValue">$100,000</div>
+                    <div class="metric-label">Total Value</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="totalReturn">0%</div>
+                    <div class="metric-label">Total Return</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="pnl">$0</div>
+                    <div class="metric-label">P&L</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="sharpeRatio">0</div>
+                    <div class="metric-label">Sharpe Ratio</div>
+                </div>
+            </div>
+            
+            <div class="neural-visualization">
+                <h3>🧠 Neural Network Architecture</h3>
+                <div class="neural-layer">
+                    <div class="neural-node">Input</div>
+                </div>
+                <div class="neural-layer">
+                    <div class="neural-node">LSTM</div>
+                    <div class="neural-node">LSTM</div>
+                    <div class="neural-node">LSTM</div>
+                </div>
+                <div class="neural-layer">
+                    <div class="neural-node">Dropout</div>
+                    <div class="neural-node">Dense</div>
+                </div>
+                <div class="neural-layer">
+                    <div class="neural-node">BUY</div>
+                    <div class="neural-node">SELL</div>
+                    <div class="neural-node">HOLD</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="portfolio-section">
+            <h2>📋 Trading History</h2>
+            <div class="trade-history" id="tradeHistory">
+                <!-- Trade history will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let priceChart;
+        let currentSignals = [];
+
+        // Initialize price chart
+        function initPriceChart() {
+            const ctx = document.getElementById('priceChart').getContext('2d');
+            
+            priceChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Price',
+                        data: [],
+                        borderColor: '#ff00ff',
+                        backgroundColor: 'rgba(255, 0, 255, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#e0e0e0'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#b0b0b0'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#b0b0b0'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Get trading signal for selected symbol
+        async function getTradingSignal() {
+            const symbol = document.getElementById('symbol').value;
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            
+            try {
+                const response = await fetch(`http://localhost:8001/api/signals/${symbol}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    displaySignal(data.signal);
+                    updatePriceChart(data.signal);
+                } else {
+                    alert('Failed to get trading signal: ' + data.error);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Load all trading signals
+        async function loadAllSignals() {
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            
+            try {
+                const response = await fetch('http://localhost:8001/api/signals');
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayAllSignals(data.signals);
+                    currentSignals = data.signals;
+                }
+                
+                // Load portfolio and history
+                await loadPortfolio();
+                await loadTradingHistory();
+                
+            } catch (error) {
+                console.error('Failed to load signals:', error);
+                alert('Failed to load trading signals: ' + error.message);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Display single signal
+        function displaySignal(signal) {
+            const grid = document.getElementById('signalsGrid');
+            grid.innerHTML = '';
+            
+            const card = document.createElement('div');
+            card.className = 'signal-card';
+            card.innerHTML = `
+                <div class="signal-action action-${signal.action.toLowerCase()}">${signal.action}</div>
+                <div class="signal-price">$${signal.price.toFixed(2)}</div>
+                <div class="signal-confidence">Confidence: ${(signal.confidence * 100).toFixed(1)}%</div>
+                <div class="neural-output">
+                    <h4>🧠 Neural Network Output</h4>
+                    <p>BUY: ${(signal.neural_network_output.buy_probability * 100).toFixed(1)}%</p>
+                    <p>SELL: ${(signal.neural_network_output.sell_probability * 100).toFixed(1)}%</p>
+                    <p>HOLD: ${(signal.neural_network_output.hold_probability * 100).toFixed(1)}%</p>
+                </div>
+            `;
+            grid.appendChild(card);
+        }
+
+        // Display all signals
+        function displayAllSignals(signals) {
+            const grid = document.getElementById('signalsGrid');
+            grid.innerHTML = '';
+            
+            signals.forEach(signal => {
+                const card = document.createElement('div');
+                card.className = 'signal-card';
+                card.innerHTML = `
+                    <div class="signal-action action-${signal.action.toLowerCase()}">${signal.action}</div>
+                    <div class="signal-price">${signal.symbol}: $${signal.price.toFixed(2)}</div>
+                    <div class="signal-confidence">Confidence: ${(signal.confidence * 100).toFixed(1)}%</div>
+                    <div class="neural-output">
+                        <h4>🧠 Neural Network Output</h4>
+                        <p>BUY: ${(signal.neural_network_output.buy_probability * 100).toFixed(1)}%</p>
+                        <p>SELL: ${(signal.neural_network_output.sell_probability * 100).toFixed(1)}%</p>
+                        <p>HOLD: ${(signal.neural_network_output.hold_probability * 100).toFixed(1)}%</p>
+                    </div>
+                    <button class="btn" onclick="tradeFromSignal('${signal.symbol}', '${signal.action}')" style="width: 100%; margin-top: 10px;">
+                        🚀 Trade ${signal.action}
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Update price chart
+        function updatePriceChart(signal) {
+            // Generate sample price history
+            const labels = [];
+            const prices = [];
+            const basePrice = signal.price;
+            
+            for (let i = 29; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                labels.push(date.toLocaleDateString());
+                
+                const variation = (Math.random() - 0.5) * basePrice * 0.05;
+                prices.push(basePrice + variation);
+            }
+            
+            priceChart.data.labels = labels;
+            priceChart.data.datasets[0].data = prices;
+            priceChart.update();
+        }
+
+        // Execute trade
+        async function executeTrade(action) {
+            const symbol = document.getElementById('symbol').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const orderType = document.getElementById('orderType').value;
+            
+            try {
+                const response = await fetch('http://localhost:8001/api/trade', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        symbol: symbol,
+                        action: action,
+                        quantity: quantity,
+                        price: 0, // Market order
+                        order_type: orderType
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(`${action} order executed successfully! Trade ID: ${data.trade_record.trade_id}`);
+                    await loadPortfolio();
+                    await loadTradingHistory();
+                } else {
+                    alert('Trade execution failed: ' + data.error);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        // Trade from signal
+        async function tradeFromSignal(symbol, action) {
+            const quantity = prompt('Enter quantity to trade:', '100');
+            if (!quantity || isNaN(quantity)) return;
+            
+            try {
+                const response = await fetch('http://localhost:8001/api/trade', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        symbol: symbol,
+                        action: action,
+                        quantity: parseInt(quantity),
+                        price: 0, // Market order
+                        order_type: 'MARKET'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(`${action} order executed for ${symbol}! Trade ID: ${data.trade_record.trade_id}`);
+                    await loadPortfolio();
+                    await loadTradingHistory();
+                } else {
+                    alert('Trade execution failed: ' + data.error);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        // Load portfolio
+        async function loadPortfolio() {
+            try {
+                const response = await fetch('http://localhost:8001/api/portfolio');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const portfolio = data.portfolio;
+                    
+                    document.getElementById('totalValue').textContent = `$${portfolio.total_value.toFixed(0)}`;
+                    
+                    const returnElement = document.getElementById('totalReturn');
+                    returnElement.textContent = `${portfolio.total_return.toFixed(2)}%`;
+                    returnElement.className = portfolio.total_return >= 0 ? 'metric-value positive' : 'metric-value negative';
+                    
+                    const pnlElement = document.getElementById('pnl');
+                    pnlElement.textContent = `$${portfolio.pnl.toFixed(0)}`;
+                    pnlElement.className = portfolio.pnl >= 0 ? 'metric-value positive' : 'metric-value negative';
+                    
+                    document.getElementById('sharpeRatio').textContent = portfolio.sharpe_ratio.toFixed(2);
+                }
+            } catch (error) {
+                console.error('Failed to load portfolio:', error);
+            }
+        }
+
+        // Load trading history
+        async function loadTradingHistory() {
+            try {
+                const response = await fetch('http://localhost:8001/api/trading-history');
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayTradingHistory(data.trades);
+                }
+            } catch (error) {
+                console.error('Failed to load trading history:', error);
+            }
+        }
+
+        // Display trading history
+        function displayTradingHistory(trades) {
+            const container = document.getElementById('tradeHistory');
+            container.innerHTML = '';
+            
+            if (trades.length === 0) {
+                container.innerHTML = '<p style="color: #b0b0b0; text-align: center;">No trades yet</p>';
+                return;
+            }
+            
+            trades.slice(-10).forEach(trade => {
+                const item = document.createElement('div');
+                item.className = 'trade-item';
+                item.innerHTML = `
+                    <h4>${trade.action} ${trade.symbol}</h4>
+                    <p>${trade.quantity} shares @ $${trade.price.toFixed(2)}</p>
+                    <p>Total: $${trade.total_value.toFixed(2)} | ${trade.order_type} Order</p>
+                    <p style="font-size: 0.8rem; color: #888;">${new Date(trade.timestamp).toLocaleString()}</p>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            initPriceChart();
+            loadAllSignals();
+        });
+    </script>
+</body>
+</html>
