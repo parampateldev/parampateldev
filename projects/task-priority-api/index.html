@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Demo Mode Banner -->
+    <div id="demoBanner" class="demo-banner" style="display: none;">
+        <span>DEMO MODE - Data stored in browser only. For full functionality, run the backend API locally.</span>
+        <button onclick="document.getElementById('demoBanner').style.display='none'" style="background: transparent; border: none; color: inherit; cursor: pointer; margin-left: 1rem;">✕</button>
+    </div>
+    <!-- Main Grid Layout -->
+    <div class="app-container">
+        
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <path d="M16 4L28 10V22L16 28L4 22V10L16 4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M16 12L22 15.5V20.5L16 24L10 20.5V15.5L16 12Z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>TaskFlow</h1>
+                    <span class="ai-badge">PRIORITY ENGINE</span>
+                </div>
+            </div>
+            
+            <div class="stats-panel">
+                <div class="stat-item">
+                    <div class="stat-label">Total Tasks</div>
+                    <div class="stat-value" id="totalTasks">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Completed</div>
+                    <div class="stat-value success" id="completedTasks">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">In Progress</div>
+                    <div class="stat-value warning" id="incompleteTasks">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">High Priority</div>
+                    <div class="stat-value danger" id="highPriorityTasks">0</div>
+                </div>
+            </div>
+
+            <div class="ai-recommendation">
+                <div class="ai-label">AI RECOMMENDATION</div>
+                <button class="btn-ai" onclick="getNextTask()">
+                    <span class="pulse-dot"></span>
+                    Get Next Task
+                </button>
+            </div>
+
+            <div class="sidebar-footer">
+                <a href="about.html" class="btn-learn-more">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <circle cx="8" cy="8" r="7" stroke="currentColor" fill="none" stroke-width="1.5"/>
+                        <path d="M8 6v6M8 4v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    Learn How This Works
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Top Navigation -->
+            <nav class="top-nav">
+                <div class="nav-filters">
+                    <button class="filter-chip active" onclick="filterTasks('all')">All Tasks</button>
+                    <button class="filter-chip" onclick="filterTasks('incomplete')">Active</button>
+                    <button class="filter-chip" onclick="filterTasks('complete')">Completed</button>
+                    <button class="filter-chip priority-sort" onclick="sortByPriority()">↓ Priority</button>
+                </div>
+                <button class="btn-add" onclick="toggleAddForm()">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 0v16M0 8h16" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    New Task
+                </button>
+            </nav>
+
+            <!-- AI Recommended Task Card -->
+            <div id="nextTaskCard" class="ai-task-card hidden">
+                <div class="ai-badge-corner">AI PICK</div>
+                <div class="ai-task-header">
+                    <h3 id="nextTaskTitle"></h3>
+                    <button class="btn-close" onclick="closeAiCard()">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M1 1L15 15M15 1L1 15" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </button>
+                </div>
+                <p id="nextTaskDescription" class="ai-task-desc"></p>
+                <div class="ai-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Score</span>
+                        <span class="metric-value priority-score" id="nextTaskPriority"></span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Urgency</span>
+                        <span class="metric-value" id="nextTaskUrgency"></span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Impact</span>
+                        <span class="metric-value" id="nextTaskImportance"></span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Effort</span>
+                        <span class="metric-value" id="nextTaskEffort"></span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Deadline</span>
+                        <span class="metric-value" id="nextTaskDeadline"></span>
+                    </div>
+                </div>
+                <button class="btn-complete" onclick="completeTaskFromNext()">Complete Task</button>
+            </div>
+
+            <!-- Add Task Form (Collapsible) -->
+            <div id="addTaskForm" class="add-form hidden">
+                <form id="taskForm" class="compact-form">
+                    <div class="form-inputs">
+                        <input type="text" id="taskTitle" class="input-field" placeholder="Task title *" required>
+                        <textarea id="taskDescription" class="input-field" rows="2" placeholder="Description (optional)"></textarea>
+                    </div>
+
+                    <div class="form-grid-ratings">
+                        <div class="rating-group">
+                            <label class="section-label">Urgency</label>
+                            <div class="rating-buttons" id="urgencyButtons">
+                                <button type="button" class="rating-btn" data-value="1">1</button>
+                                <button type="button" class="rating-btn" data-value="2">2</button>
+                                <button type="button" class="rating-btn" data-value="3">3</button>
+                                <button type="button" class="rating-btn" data-value="4">4</button>
+                                <button type="button" class="rating-btn active" data-value="5">5</button>
+                                <button type="button" class="rating-btn" data-value="6">6</button>
+                                <button type="button" class="rating-btn" data-value="7">7</button>
+                                <button type="button" class="rating-btn" data-value="8">8</button>
+                                <button type="button" class="rating-btn" data-value="9">9</button>
+                                <button type="button" class="rating-btn" data-value="10">10</button>
+                            </div>
+                        </div>
+
+                        <div class="rating-group">
+                            <label class="section-label">Impact</label>
+                            <div class="rating-buttons" id="importanceButtons">
+                                <button type="button" class="rating-btn" data-value="1">1</button>
+                                <button type="button" class="rating-btn" data-value="2">2</button>
+                                <button type="button" class="rating-btn" data-value="3">3</button>
+                                <button type="button" class="rating-btn" data-value="4">4</button>
+                                <button type="button" class="rating-btn active" data-value="5">5</button>
+                                <button type="button" class="rating-btn" data-value="6">6</button>
+                                <button type="button" class="rating-btn" data-value="7">7</button>
+                                <button type="button" class="rating-btn" data-value="8">8</button>
+                                <button type="button" class="rating-btn" data-value="9">9</button>
+                                <button type="button" class="rating-btn" data-value="10">10</button>
+                            </div>
+                        </div>
+
+                        <div class="rating-group">
+                            <label class="section-label">Effort</label>
+                            <div class="rating-buttons" id="effortButtons">
+                                <button type="button" class="rating-btn" data-value="1">1</button>
+                                <button type="button" class="rating-btn" data-value="2">2</button>
+                                <button type="button" class="rating-btn" data-value="3">3</button>
+                                <button type="button" class="rating-btn" data-value="4">4</button>
+                                <button type="button" class="rating-btn active" data-value="5">5</button>
+                                <button type="button" class="rating-btn" data-value="6">6</button>
+                                <button type="button" class="rating-btn" data-value="7">7</button>
+                                <button type="button" class="rating-btn" data-value="8">8</button>
+                                <button type="button" class="rating-btn" data-value="9">9</button>
+                                <button type="button" class="rating-btn" data-value="10">10</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="deadline-row">
+                        <label class="section-label">Deadline</label>
+                        <div class="deadline-options">
+                            <button type="button" class="deadline-btn" data-days="0">Today</button>
+                            <button type="button" class="deadline-btn" data-days="1">Tomorrow</button>
+                            <button type="button" class="deadline-btn" data-days="3">3 Days</button>
+                            <button type="button" class="deadline-btn" data-days="7">Week</button>
+                            <button type="button" class="deadline-btn" data-days="custom">Custom</button>
+                        </div>
+                        <input type="date" id="taskDeadline" class="input-field" style="display: none;">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" onclick="toggleAddForm()">Cancel</button>
+                        <button type="submit" class="btn-submit">Add Task</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Task List -->
+            <div class="tasks-container">
+                <div id="taskList" class="task-grid">
+                    <p class="loading-text">Loading tasks...</p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <span>Powered by <strong>Param Patel</strong></span>
+            <a href="https://github.com/parampateldev" target="_blank" class="github-link">
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+                GitHub
+            </a>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
+

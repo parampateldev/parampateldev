@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works - TaskFlow AI</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .about-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .about-sidebar {
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .about-content {
+            height: 100vh;
+            overflow-y: auto;
+            padding: 3rem 4rem;
+            padding-bottom: 100px;
+        }
+
+        .about-header {
+            margin-bottom: 3rem;
+        }
+
+        .about-header h1 {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-header .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section h3 {
+            font-size: 1.3rem;
+            color: var(--accent-primary);
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        .section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .section ul {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .code-block {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .code-block code {
+            color: var(--accent-primary);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border-left: 4px solid var(--accent-primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box strong {
+            color: var(--accent-primary);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: border-color 0.2s;
+        }
+
+        .tech-card:hover {
+            border-color: var(--accent-primary);
+        }
+
+        .tech-card h4 {
+            color: var(--accent-primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .tech-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        .btn-back {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent-primary);
+            border: none;
+            border-radius: 8px;
+            color: var(--bg-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: transform 0.2s;
+        }
+
+        .btn-back:hover {
+            transform: scale(1.02);
+        }
+
+        .section-icon {
+            color: var(--accent-primary);
+        }
+
+        @media (max-width: 1024px) {
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+
+            .about-sidebar {
+                position: relative;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .about-content {
+                padding: 2rem;
+            }
+
+            .about-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="about-container">
+        <!-- Sidebar -->
+        <aside class="about-sidebar">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <path d="M16 4L28 10V22L16 28L4 22V10L16 4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M16 12L22 15.5V20.5L16 24L10 20.5V15.5L16 12Z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>TaskFlow</h1>
+                    <span class="ai-badge">PRIORITY ENGINE</span>
+                </div>
+            </div>
+
+            <div style="flex: 1;"></div>
+
+            <a href="index.html" class="btn-back">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 0L1 8l7 8V0z" fill="currentColor"/>
+                </svg>
+                Back to Dashboard
+            </a>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="about-content">
+            <div class="about-header">
+                <h1>How TaskFlow AI Works</h1>
+                <p class="subtitle">A deep dive into the architecture, algorithms, and design principles</p>
+            </div>
+
+            <!-- System Overview -->
+            <section class="section">
+                <h2>
+                    <span class="section-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2"/>
+                            <path d="M9 3v18M3 9h18M3 15h18" stroke-width="2"/>
+                        </svg>
+                    </span>
+                    System Overview
+                </h2>
+                <p>
+                    TaskFlow AI is a full-stack web application that combines intelligent task prioritization with modern web technologies. 
+                    The system consists of three main components working together seamlessly:
+                </p>
+
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>REST API Backend</h4>
+                        <p>Node.js + Express server handling all business logic, data management, and priority calculations</p>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Frontend Interface</h4>
+                        <p>Modern HTML5, CSS3, and vanilla JavaScript creating a responsive, dark-themed user experience</p>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Priority Algorithm</h4>
+                        <p>Intelligent scoring system that analyzes multiple factors to recommend optimal task order</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- REST API Architecture -->
+            <section class="section">
+                <h2>
+                    <span class="section-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="9" stroke-width="2"/>
+                            <path d="M12 3v18M3 12h18" stroke-width="2"/>
+                        </svg>
+                    </span>
+                    REST API Architecture
+                </h2>
+
+                <h3>What is REST?</h3>
+                <p>
+                    REST (Representational State Transfer) is an architectural style for building web services. Our API follows REST principles 
+                    to provide a clean, predictable interface for task management operations.
+                </p>
+
+                <h3>API Endpoints</h3>
+                <p>The backend exposes 10 RESTful endpoints:</p>
+
+                <div class="code-block">
+                    <code>
+GET  /api/tasks              → Retrieve all tasks<br>
+GET  /api/tasks/priority     → Get tasks sorted by priority<br>
+GET  /api/tasks/next         → Get AI recommendation<br>
+GET  /api/tasks/:id          → Get specific task<br>
+POST /api/tasks              → Create new task<br>
+PUT  /api/tasks/:id          → Update task<br>
+PATCH /api/tasks/:id/complete → Mark task complete<br>
+DELETE /api/tasks/:id        → Delete task<br>
+GET  /api/stats              → Get statistics
+                    </code>
+                </div>
+
+                <h3>HTTP Methods</h3>
+                <ul>
+                    <li><strong>GET:</strong> Retrieve data without modifying anything</li>
+                    <li><strong>POST:</strong> Create new resources</li>
+                    <li><strong>PUT:</strong> Update entire resources</li>
+                    <li><strong>PATCH:</strong> Partially update resources</li>
+                    <li><strong>DELETE:</strong> Remove resources</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p><strong>Example API Request:</strong></p>
+                    <div class="code-block">
+                        <code>
+fetch('http://localhost:3000/api/tasks', {<br>
+  method: 'POST',<br>
+  headers: { 'Content-Type': 'application/json' },<br>
+  body: JSON.stringify({<br>
+    title: "Complete project",<br>
+    urgency: 9,<br>
+    importance: 10<br>
+  })<br>
+})
+                        </code>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Priority Algorithm -->
+            <section class="section">
+                <h2>
+                    <span class="section-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M12 2L2 7v10l10 5 10-5V7L12 2z" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M12 12L2 7M12 12l10-5M12 12v10" stroke-width="2"/>
+                        </svg>
+                    </span>
+                    Intelligent Priority Algorithm
+                </h2>
+
+                <p>
+                    TaskFlow uses a weighted scoring algorithm that considers multiple factors to calculate a priority score (0-100) for each task.
+                </p>
+
+                <h3>Scoring Formula</h3>
+                <div class="code-block">
+                    <code>
+Priority Score = (Urgency × 0.30) + (Importance × 0.35) + <br>
+                 (Effort × 0.15) + (Deadline × 0.20)
+                    </code>
+                </div>
+
+                <h3>Algorithm Factors</h3>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>Urgency (30%)</h4>
+                        <p>How time-sensitive is this task? Higher urgency increases priority.</p>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Importance (35%)</h4>
+                        <p>Strategic value and long-term impact. The highest weighted factor.</p>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Effort (15%)</h4>
+                        <p>Lower effort tasks get priority boost - quick wins matter!</p>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Deadline (20%)</h4>
+                        <p>Dynamic scoring based on time remaining until deadline.</p>
+                    </div>
+                </div>
+
+                <h3>Deadline Proximity Scoring</h3>
+                <ul>
+                    <li><strong>Overdue:</strong> Maximum priority (100%)</li>
+                    <li><strong>Due today:</strong> 95% priority boost</li>
+                    <li><strong>Due tomorrow:</strong> 90% priority boost</li>
+                    <li><strong>Due in 2-3 days:</strong> 70% priority boost</li>
+                    <li><strong>Due this week:</strong> 40% priority boost</li>
+                    <li><strong>Due later:</strong> 10% base priority</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p><strong>Dependency Handling:</strong> Tasks with incomplete dependencies automatically receive a 70% penalty, 
+                    ensuring you focus on unblocked work first.</p>
+                </div>
+            </section>
+
+            <!-- Frontend Design -->
+            <section class="section">
+                <h2>
+                    <span class="section-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2"/>
+                            <path d="M3 8h18" stroke-width="2"/>
+                        </svg>
+                    </span>
+                    Frontend Design & Architecture
+                </h2>
+
+                <h3>Technology Stack</h3>
+                <ul>
+                    <li><strong>HTML5:</strong> Semantic markup with proper accessibility</li>
+                    <li><strong>CSS3:</strong> Custom dark theme with CSS Grid and Flexbox</li>
+                    <li><strong>Vanilla JavaScript:</strong> No frameworks - pure, efficient DOM manipulation</li>
+                    <li><strong>Fetch API:</strong> Modern HTTP requests to backend</li>
+                </ul>
+
+                <h3>Design Principles</h3>
+                <ul>
+                    <li><strong>Full-Page Layout:</strong> Utilizes 100% viewport height with no wasted space</li>
+                    <li><strong>Dark Theme:</strong> Reduces eye strain and provides modern aesthetic</li>
+                    <li><strong>Responsive Design:</strong> Adapts seamlessly to desktop, tablet, and mobile</li>
+                    <li><strong>Real-time Updates:</strong> Instant feedback on all user actions</li>
+                    <li><strong>Professional Icons:</strong> SVG icons for crisp rendering at any scale</li>
+                </ul>
+
+                <h3>CSS Architecture</h3>
+                <div class="code-block">
+                    <code>
+CSS Variables for Theme Consistency:<br>
+--bg-primary: #0a0e27      (Deep navy background)<br>
+--accent-primary: #00d9ff  (Cyan highlights)<br>
+--text-primary: #e8eaed    (Light text)<br>
+<br>
+Layout: CSS Grid + Flexbox<br>
+Typography: System fonts for performance<br>
+Animations: Subtle transitions for polish
+                    </code>
+                </div>
+            </section>
+
+            <!-- Backend Implementation -->
+            <section class="section">
+                <h2>
+                    <span class="section-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </span>
+                    Backend Implementation
+                </h2>
+
+                <h3>Node.js + Express</h3>
+                <p>
+                    The backend is built with Node.js and Express.js, providing a lightweight, fast, and scalable server. 
+                    The server handles all business logic, data validation, and priority calculations.
+                </p>
+
+                <h3>Key Features</h3>
+                <ul>
+                    <li><strong>CORS Support:</strong> Enables cross-origin requests for frontend</li>
+                    <li><strong>JSON Middleware:</strong> Automatic parsing of request bodies</li>
+                    <li><strong>In-Memory Storage:</strong> Fast data access (easily replaceable with database)</li>
+                    <li><strong>Error Handling:</strong> Graceful error responses with proper status codes</li>
+                    <li><strong>Input Validation:</strong> Ensures data integrity</li>
+                </ul>
+
+                <h3>Scalability Considerations</h3>
+                <div class="highlight-box">
+                    <p>The current implementation uses in-memory storage for simplicity. For production deployment, the system can easily integrate with:</p>
+                    <ul>
+                        <li>PostgreSQL or MySQL for relational data</li>
+                        <li>MongoDB for document-based storage</li>
+                        <li>Redis for caching and session management</li>
+                        <li>Authentication middleware (JWT, OAuth)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Data Flow -->
+            <section class="section">
+                <h2>
+                    <span class="section-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M3 12h18M3 12l4-4M3 12l4 4M21 12l-4-4M21 12l-4 4" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </span>
+                    Data Flow & Communication
+                </h2>
+
+                <h3>Request-Response Cycle</h3>
+                <p>Understanding how data flows through the system:</p>
+
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>1. User Action</h4>
+                        <p>User clicks "New Task" button in the frontend interface</p>
+                    </div>
+                    <div class="tech-card">
+                        <h4>2. Frontend Request</h4>
+                        <p>JavaScript sends HTTP POST request with task data to API</p>
+                    </div>
+                    <div class="tech-card">
+                        <h4>3. Backend Processing</h4>
+                        <p>Server validates data, calculates priority score, stores task</p>
+                    </div>
+                    <div class="tech-card">
+                        <h4>4. Response</h4>
+                        <p>API returns created task with status code 201</p>
+                    </div>
+                    <div class="tech-card">
+                        <h4>5. UI Update</h4>
+                        <p>Frontend receives response, updates task list, shows notification</p>
+                    </div>
+                    <div class="tech-card">
+                        <h4>6. Stats Refresh</h4>
+                        <p>Dashboard statistics automatically update to reflect changes</p>
+                    </div>
+                </div>
+
+                <h3>Asynchronous Operations</h3>
+                <p>
+                    All API calls use JavaScript's async/await pattern for clean, non-blocking code. This ensures the 
+                    interface remains responsive even during network requests.
+                </p>
+            </section>
+
+            <!-- Future Enhancements -->
+            <section class="section">
+                <h2>
+                    <span class="section-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-width="2" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    Potential Enhancements
+                </h2>
+
+                <p>The current architecture is designed to support future features:</p>
+
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>User Authentication</h4>
+                        <p>Multi-user support with JWT-based authentication</p>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Database Integration</h4>
+                        <p>Persistent storage with PostgreSQL or MongoDB</p>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Machine Learning</h4>
+                        <p>Learn from user behavior to improve recommendations</p>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Real-time Collaboration</h4>
+                        <p>WebSocket integration for team features</p>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Mobile Apps</h4>
+                        <p>Native iOS and Android apps using the same API</p>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Integrations</h4>
+                        <p>Connect with Slack, Calendar, Email, and more</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Technical Details -->
+            <section class="section">
+                <h2>
+                    <span class="section-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="3" y="3" width="7" height="7" rx="1" stroke-width="2"/>
+                            <rect x="14" y="3" width="7" height="7" rx="1" stroke-width="2"/>
+                            <rect x="3" y="14" width="7" height="7" rx="1" stroke-width="2"/>
+                            <rect x="14" y="14" width="7" height="7" rx="1" stroke-width="2"/>
+                        </svg>
+                    </span>
+                    Technical Specifications
+                </h2>
+
+                <h3>Performance Characteristics</h3>
+                <ul>
+                    <li><strong>API Response Time:</strong> < 5ms for most endpoints (in-memory)</li>
+                    <li><strong>Frontend Load Time:</strong> < 100ms (no framework overhead)</li>
+                    <li><strong>Priority Calculation:</strong> O(1) time complexity per task</li>
+                    <li><strong>Task List Rendering:</strong> Efficient DOM manipulation</li>
+                </ul>
+
+                <h3>Browser Compatibility</h3>
+                <p>Built with modern web standards, compatible with:</p>
+                <ul>
+                    <li>Chrome/Edge (latest)</li>
+                    <li>Firefox (latest)</li>
+                    <li>Safari (latest)</li>
+                    <li>Mobile browsers (iOS Safari, Chrome Android)</li>
+                </ul>
+
+                <h3>Development Setup</h3>
+                <div class="code-block">
+                    <code>
+# Install dependencies<br>
+npm install<br>
+<br>
+# Start API server<br>
+npm start<br>
+<br>
+# Start frontend (in separate terminal)<br>
+python3 -m http.server 8001<br>
+<br>
+# Access application<br>
+http://localhost:8001
+                    </code>
+                </div>
+            </section>
+
+            <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+                <p style="text-align: center; color: var(--text-muted);">
+                    Built with modern web technologies by <strong style="color: var(--text-primary);">Param Patel</strong>
+                </p>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+

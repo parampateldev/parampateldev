@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarbonCredits AI - Revolutionary Carbon Trading</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a2e1a 50%, #0f2e0f 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            margin-bottom: 20px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .control-panel {
+            background: rgba(0, 255, 136, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .control-panel h2 {
+            color: #00ff88;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #b0b0b0;
+            font-weight: 500;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .market-panel {
+            background: rgba(0, 255, 136, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .market-panel h2 {
+            color: #00ff88;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+
+        .credits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .credit-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .credit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 255, 136, 0.2);
+        }
+
+        .credit-type {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .type-renewable { background: rgba(0, 255, 136, 0.3); color: #00ff88; }
+        .type-forest { background: rgba(139, 69, 19, 0.3); color: #ff6b35; }
+        .type-ocean { background: rgba(0, 212, 255, 0.3); color: #00d4ff; }
+        .type-industrial { background: rgba(255, 0, 255, 0.3); color: #ff00ff; }
+
+        .credit-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00ff88;
+            margin-bottom: 5px;
+        }
+
+        .credit-volume {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .ai-prediction {
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            border-left: 4px solid #00d4ff;
+        }
+
+        .ai-prediction h4 {
+            color: #00d4ff;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .ai-prediction p {
+            color: #e0e0e0;
+            font-size: 0.8rem;
+        }
+
+        .portfolio-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .portfolio-section h2 {
+            color: #00ff88;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00ff88;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #00ff88;
+        }
+
+        .spinner {
+            border: 3px solid rgba(0, 255, 136, 0.3);
+            border-top: 3px solid #00ff88;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .trade-history {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .trade-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #00ff88;
+        }
+
+        .trade-item h4 {
+            color: #00ff88;
+            margin-bottom: 5px;
+        }
+
+        .trade-item p {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌱 CarbonCredits AI</h1>
+            <p>Revolutionary AI-Powered Carbon Trading Platform</p>
+            <span class="status-badge">REVOLUTIONARY STARTUP</span>
+        </div>
+
+        <div class="dashboard">
+            <div class="control-panel">
+                <h2>🎛️ Trading Controls</h2>
+                
+                <div class="input-group">
+                    <label for="budget">Investment Budget ($)</label>
+                    <input type="number" id="budget" value="10000" min="100">
+                </div>
+
+                <div class="input-group">
+                    <label for="risk">Risk Tolerance</label>
+                    <select id="risk">
+                        <option value="0.1">Conservative</option>
+                        <option value="0.5" selected>Moderate</option>
+                        <option value="0.9">Aggressive</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="goals">Sustainability Goals</label>
+                    <select id="goals" multiple>
+                        <option value="renewable" selected>Renewable Energy</option>
+                        <option value="forest" selected>Forest Conservation</option>
+                        <option value="ocean">Ocean Protection</option>
+                        <option value="industrial">Industrial Efficiency</option>
+                    </select>
+                </div>
+
+                <button class="btn" onclick="optimizePortfolio()">🧠 AI Optimize Portfolio</button>
+                <button class="btn" onclick="loadMarketData()">📊 Refresh Market</button>
+                <button class="btn" onclick="viewAnalytics()">📈 Market Analytics</button>
+            </div>
+
+            <div class="market-panel">
+                <h2>📈 Carbon Credit Market</h2>
+                <div class="chart-container">
+                    <canvas id="priceChart"></canvas>
+                </div>
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Processing carbon market data...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="credits-grid" id="creditsGrid">
+            <!-- Carbon credits will be loaded here -->
+        </div>
+
+        <div class="portfolio-section">
+            <h2>💼 AI-Optimized Portfolio</h2>
+            <div class="metrics-grid" id="portfolioMetrics">
+                <div class="metric-card">
+                    <div class="metric-value" id="totalCost">$0</div>
+                    <div class="metric-label">Total Investment</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="totalCo2">0</div>
+                    <div class="metric-label">CO2 Tons Offset</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="avgPrice">$0</div>
+                    <div class="metric-label">Avg Price/Ton</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="diversification">0%</div>
+                    <div class="metric-label">Diversification</div>
+                </div>
+            </div>
+            
+            <div id="portfolioDetails"></div>
+        </div>
+
+        <div class="portfolio-section">
+            <h2>📋 Recent Trades</h2>
+            <div class="trade-history" id="tradeHistory">
+                <!-- Trade history will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let priceChart;
+        let marketData = [];
+
+        // Initialize price chart
+        function initPriceChart() {
+            const ctx = document.getElementById('priceChart').getContext('2d');
+            
+            priceChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Carbon Credit Price ($/ton)',
+                        data: [],
+                        borderColor: '#00ff88',
+                        backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#e0e0e0'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#b0b0b0'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#b0b0b0'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Load market data
+        async function loadMarketData() {
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            
+            try {
+                // Load carbon credits
+                const creditsResponse = await fetch('http://localhost:8000/api/credits');
+                const creditsData = await creditsResponse.json();
+                
+                if (creditsData.success) {
+                    displayCarbonCredits(creditsData.credits);
+                }
+                
+                // Load market analytics
+                const analyticsResponse = await fetch('http://localhost:8000/api/market-data');
+                const analyticsData = await analyticsResponse.json();
+                
+                if (analyticsData.success) {
+                    updatePriceChart(analyticsData.market_data);
+                }
+                
+                // Load trading history
+                const historyResponse = await fetch('http://localhost:8000/api/trading-history');
+                const historyData = await historyResponse.json();
+                
+                if (historyData.success) {
+                    displayTradeHistory(historyData.trades);
+                }
+                
+            } catch (error) {
+                console.error('Failed to load market data:', error);
+                alert('Failed to load market data: ' + error.message);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Display carbon credits
+        function displayCarbonCredits(credits) {
+            const grid = document.getElementById('creditsGrid');
+            grid.innerHTML = '';
+            
+            credits.slice(0, 12).forEach(credit => {
+                const card = document.createElement('div');
+                card.className = 'credit-card';
+                card.innerHTML = `
+                    <div class="credit-type type-${credit.type}">${credit.type.toUpperCase()}</div>
+                    <div class="credit-price">$${credit.price.toFixed(2)}/ton</div>
+                    <div class="credit-volume">${credit.volume.toLocaleString()} tons available</div>
+                    <div class="credit-volume">📍 ${credit.location} | ${credit.certification}</div>
+                    <div class="credit-volume">🌍 ${credit.co2_tons.toFixed(1)} CO2 tons per unit</div>
+                    <div class="ai-prediction">
+                        <h4>🤖 AI Prediction</h4>
+                        <p>Optimal price: $${(credit.price * 1.1).toFixed(2)}/ton</p>
+                        <p>Confidence: 85%</p>
+                    </div>
+                    <button class="btn" onclick="tradeCredit('${credit.id}', ${credit.price})" style="width: 100%; margin-top: 10px;">
+                        💰 Trade Now
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Update price chart
+        function updatePriceChart(analytics) {
+            // Generate sample price history
+            const labels = [];
+            const prices = [];
+            const basePrice = analytics.average_price;
+            
+            for (let i = 29; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                labels.push(date.toLocaleDateString());
+                
+                const variation = (Math.random() - 0.5) * analytics.price_volatility;
+                prices.push(basePrice + variation);
+            }
+            
+            priceChart.data.labels = labels;
+            priceChart.data.datasets[0].data = prices;
+            priceChart.update();
+        }
+
+        // Display trade history
+        function displayTradeHistory(trades) {
+            const container = document.getElementById('tradeHistory');
+            container.innerHTML = '';
+            
+            if (trades.length === 0) {
+                container.innerHTML = '<p style="color: #b0b0b0; text-align: center;">No trades yet</p>';
+                return;
+            }
+            
+            trades.slice(-10).forEach(trade => {
+                const item = document.createElement('div');
+                item.className = 'trade-item';
+                item.innerHTML = `
+                    <h4>${trade.credit_type.toUpperCase()} - ${trade.location}</h4>
+                    <p>${trade.quantity} tons @ $${trade.price_per_ton.toFixed(2)}/ton</p>
+                    <p>Total: $${trade.total_cost.toFixed(2)} | ${trade.co2_tons.toFixed(1)} CO2 tons</p>
+                    <p style="font-size: 0.8rem; color: #888;">${new Date(trade.timestamp).toLocaleString()}</p>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // Optimize portfolio
+        async function optimizePortfolio() {
+            const budget = parseFloat(document.getElementById('budget').value);
+            const risk = parseFloat(document.getElementById('risk').value);
+            const goals = Array.from(document.getElementById('goals').selectedOptions).map(o => o.value);
+            
+            const loading = document.getElementById('loading');
+            loading.style.display = 'block';
+            
+            try {
+                const response = await fetch('http://localhost:8000/api/optimize-portfolio', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        user_id: 'demo_user',
+                        budget: budget,
+                        risk_tolerance: risk,
+                        sustainability_goals: goals
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayPortfolioOptimization(data.optimization);
+                } else {
+                    alert('Portfolio optimization failed: ' + data.error);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // Display portfolio optimization results
+        function displayPortfolioOptimization(optimization) {
+            document.getElementById('totalCost').textContent = `$${optimization.total_cost.toFixed(0)}`;
+            document.getElementById('totalCo2').textContent = `${optimization.total_co2_tons.toFixed(1)}`;
+            document.getElementById('avgPrice').textContent = `$${optimization.average_price_per_ton.toFixed(2)}`;
+            document.getElementById('diversification').textContent = `${(optimization.diversification_score * 100).toFixed(0)}%`;
+            
+            const detailsContainer = document.getElementById('portfolioDetails');
+            detailsContainer.innerHTML = `
+                <h3 style="color: #00ff88; margin-bottom: 15px;">📊 Portfolio Composition</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+                    ${optimization.portfolio.map(item => `
+                        <div style="background: rgba(0, 255, 136, 0.1); border-radius: 8px; padding: 15px; border-left: 4px solid #00ff88;">
+                            <h4 style="color: #00ff88; margin-bottom: 5px;">${item.type.toUpperCase()}</h4>
+                            <p>Quantity: ${item.quantity} tons</p>
+                            <p>Price: $${item.price_per_ton.toFixed(2)}/ton</p>
+                            <p>Total: $${item.total_cost.toFixed(2)}</p>
+                            <p>CO2: ${item.co2_tons.toFixed(1)} tons</p>
+                            <p style="color: #00d4ff;">AI Score: ${item.predicted_return.toFixed(2)}</p>
+                        </div>
+                    `).join('')}
+                </div>
+                <div style="margin-top: 20px; padding: 15px; background: rgba(0, 212, 255, 0.1); border-radius: 8px; border-left: 4px solid #00d4ff;">
+                    <h4 style="color: #00d4ff; margin-bottom: 10px;">🌍 Sustainability Impact</h4>
+                    <p>CO2 Reduction Score: ${(optimization.sustainability_impact.co2_reduction * 100).toFixed(1)}%</p>
+                    <p>Biodiversity Score: ${(optimization.sustainability_impact.biodiversity * 100).toFixed(1)}%</p>
+                    <p>Social Impact Score: ${(optimization.sustainability_impact.social_impact * 100).toFixed(1)}%</p>
+                </div>
+            `;
+        }
+
+        // Trade a carbon credit
+        async function tradeCredit(creditId, price) {
+            const quantity = prompt('Enter quantity to trade:', '100');
+            if (!quantity || isNaN(quantity)) return;
+            
+            try {
+                const response = await fetch('http://localhost:8000/api/trade', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        credit_id: creditId,
+                        quantity: parseInt(quantity),
+                        buyer_id: 'demo_user',
+                        price_per_ton: price
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(`Trade successful! Trade ID: ${data.trade_record.trade_id}`);
+                    loadMarketData(); // Refresh data
+                } else {
+                    alert('Trade failed: ' + data.error);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        // View market analytics
+        async function viewAnalytics() {
+            try {
+                const response = await fetch('http://localhost:8000/api/market-data');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const analytics = data.market_data;
+                    alert(`Market Analytics:
+                    
+Total Credits: ${analytics.total_credits}
+Average Price: $${analytics.average_price.toFixed(2)}/ton
+Total Volume: ${analytics.total_volume.toLocaleString()} tons
+Price Trend: ${analytics.price_trend}`);
+                }
+            } catch (error) {
+                alert('Failed to load analytics: ' + error.message);
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            initPriceChart();
+            loadMarketData();
+        });
+    </script>
+</body>
+</html>

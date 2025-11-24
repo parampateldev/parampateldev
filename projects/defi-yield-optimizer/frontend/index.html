@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeFi Yield Farming Optimizer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #f59e0b, #ef4444, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #a0a0a0;
+            margin-bottom: 20px;
+        }
+
+        .project-description {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .project-description h3 {
+            color: #f59e0b;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-card h4 {
+            color: #8b5cf6;
+            margin-bottom: 10px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.2);
+        }
+
+        .card h3 {
+            color: #f59e0b;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #a0a0a0;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #f59e0b, #ef4444);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #10b981, #059669);
+        }
+
+        .pool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .pool-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .pool-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.2);
+        }
+
+        .pool-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .pool-name {
+            font-weight: bold;
+            color: #f59e0b;
+        }
+
+        .pool-apy {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #10b981;
+        }
+
+        .pool-details {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+        }
+
+        .risk-indicator {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .risk-low { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+        .risk-medium { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .risk-high { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+
+        .strategy-result {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .allocation-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .performance-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+            margin-bottom: 5px;
+        }
+
+        .metric-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #f59e0b;
+        }
+
+        .loading {
+            text-align: center;
+            color: #f59e0b;
+            font-style: italic;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #e0e0e0;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .github-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid #444;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .github-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #666;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .github-link svg {
+            fill: currentColor;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌾 DeFi Yield Farming Optimizer</h1>
+            <p>Maximize Your DeFi Returns with AI Optimization</p>
+        </div>
+
+        <div class="project-description">
+            <h3>About This Project</h3>
+            <p>This DeFi Yield Farming Optimizer automatically finds and manages the most profitable liquidity pools across multiple protocols. It uses advanced algorithms to optimize your yield farming strategy while managing risk and gas costs.</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>🌐 Multi-Protocol Support</h4>
+                    <p>Uniswap, SushiSwap, Compound, Aave, Curve, and more protocols for maximum yield opportunities.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>⚡ Automated Optimization</h4>
+                    <p>AI-powered pool selection and automatic rebalancing to maximize returns while managing risk.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🛡️ Risk Management</h4>
+                    <p>Impermanent loss protection and comprehensive risk scoring for safer yield farming.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>⛽ Gas Optimization</h4>
+                    <p>Smart contract gas fee minimization and batch transactions to reduce costs.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <!-- Available Pools Card -->
+            <div class="card">
+                <h3>🏊‍♂️ Available Liquidity Pools</h3>
+                <button class="btn" onclick="loadLiquidityPools()">Load Pools</button>
+                <div id="liquidityPools"></div>
+            </div>
+
+            <!-- Yield Rates Card -->
+            <div class="card">
+                <h3>📊 Protocol Yield Rates</h3>
+                <button class="btn" onclick="loadYieldRates()">Load Yield Rates</button>
+                <div id="yieldRates"></div>
+            </div>
+
+            <!-- Strategy Optimizer Card -->
+            <div class="card">
+                <h3>🎯 Strategy Optimizer</h3>
+                <div class="form-group">
+                    <label>Budget (USD)</label>
+                    <input type="number" id="budget" value="10000" min="100" step="100">
+                </div>
+                <div class="form-group">
+                    <label>Risk Tolerance (0-1)</label>
+                    <input type="range" id="riskTolerance" min="0" max="1" step="0.1" value="0.5">
+                    <span id="riskValue">0.5</span>
+                </div>
+                <div class="form-group">
+                    <label>Time Horizon (Days)</label>
+                    <input type="number" id="timeHorizon" value="30" min="7" max="365">
+                </div>
+                <button class="btn btn-success" onclick="optimizeStrategy()">Optimize Strategy</button>
+                <div id="strategyResult"></div>
+            </div>
+
+            <!-- Portfolio Performance Card -->
+            <div class="card">
+                <h3>💼 Portfolio Performance</h3>
+                <button class="btn" onclick="loadPortfolio()">Load Portfolio</button>
+                <div id="portfolioData"></div>
+            </div>
+
+            <!-- Auto-Compounding Card -->
+            <div class="card">
+                <h3>🔄 Auto-Compounding</h3>
+                <div class="form-group">
+                    <label>Position ID</label>
+                    <input type="text" id="positionId" value="POSITION_001" placeholder="Position ID">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="autoCompound" checked> Auto-Compound
+                    </label>
+                </div>
+                <button class="btn" onclick="compoundYield()">Execute Compound</button>
+                <div id="compoundResult"></div>
+            </div>
+
+            <!-- Performance History Card -->
+            <div class="card">
+                <h3>📈 Performance History</h3>
+                <button class="btn" onclick="loadPerformanceHistory()">Load History</button>
+                <div id="performanceHistory"></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 Param Patel</p>
+            <a href="https://github.com/parampateldev" target="_blank" class="github-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                GitHub
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8003';
+
+        // Update risk tolerance display
+        document.getElementById('riskTolerance').addEventListener('input', function() {
+            document.getElementById('riskValue').textContent = this.value;
+        });
+
+        async function loadLiquidityPools() {
+            try {
+                const response = await fetch(`${API_BASE}/api/pools`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const pools = data.pools.slice(0, 8); // Show top 8 pools
+                    document.getElementById('liquidityPools').innerHTML = `
+                        <div class="pool-grid">
+                            ${pools.map(pool => `
+                                <div class="pool-card">
+                                    <div class="pool-header">
+                                        <span class="pool-name">${pool.name}</span>
+                                        <span class="pool-apy">${pool.apy}% APY</span>
+                                    </div>
+                                    <div class="pool-details">
+                                        <div>TVL: $${pool.tvl.toLocaleString()}</div>
+                                        <div>Risk: <span class="risk-indicator risk-${pool.risk_score < 4 ? 'low' : pool.risk_score < 7 ? 'medium' : 'high'}">${pool.risk_score.toFixed(1)}</span></div>
+                                        <div>Min Deposit: $${pool.minimum_deposit}</div>
+                                        <div>Gas: ${pool.gas_cost} gwei</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('liquidityPools').innerHTML = `<div class="loading">Error loading pools</div>`;
+            }
+        }
+
+        async function loadYieldRates() {
+            try {
+                const response = await fetch(`${API_BASE}/api/yield-rates`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const rates = data.rates;
+                    document.getElementById('yieldRates').innerHTML = `
+                        <div class="pool-grid">
+                            ${Object.entries(rates).map(([protocol, data]) => `
+                                <div class="pool-card">
+                                    <div class="pool-header">
+                                        <span class="pool-name">${protocol}</span>
+                                        <span class="pool-apy">${data.avg_apy}% APY</span>
+                                    </div>
+                                    <div class="pool-details">
+                                        <div>TVL: $${data.tvl.toLocaleString()}</div>
+                                        <div>Pools: ${data.active_pools}</div>
+                                        <div>Risk: <span class="risk-indicator risk-${data.risk_level.toLowerCase()}">${data.risk_level}</span></div>
+                                        <div>Gas Efficiency: ${(data.gas_efficiency * 100).toFixed(0)}%</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('yieldRates').innerHTML = `<div class="loading">Error loading yield rates</div>`;
+            }
+        }
+
+        async function optimizeStrategy() {
+            const budget = parseFloat(document.getElementById('budget').value);
+            const riskTolerance = parseFloat(document.getElementById('riskTolerance').value);
+            const timeHorizon = parseInt(document.getElementById('timeHorizon').value);
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/optimize`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ budget, risk_tolerance: riskTolerance, time_horizon: timeHorizon })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const strategy = data.strategy;
+                    if (strategy.allocation && strategy.allocation.length > 0) {
+                        document.getElementById('strategyResult').innerHTML = `
+                            <div class="strategy-result">
+                                <h4>Optimized Strategy</h4>
+                                <div class="performance-metrics">
+                                    <div class="metric-card">
+                                        <div class="metric-label">Expected APY</div>
+                                        <div class="metric-value">${strategy.expected_apy}%</div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <div class="metric-label">Strategy Score</div>
+                                        <div class="metric-value">${strategy.strategy_score}</div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <div class="metric-label">Daily Yield</div>
+                                        <div class="metric-value">$${strategy.estimated_daily_yield}</div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <div class="metric-label">Monthly Yield</div>
+                                        <div class="metric-value">$${strategy.estimated_monthly_yield}</div>
+                                    </div>
+                                </div>
+                                <h5>Allocation:</h5>
+                                ${strategy.allocation.map(allocation => `
+                                    <div class="allocation-item">
+                                        <strong>${allocation.pool.name}</strong><br>
+                                        Amount: $${allocation.amount.toFixed(2)} (${allocation.percentage.toFixed(1)}%)<br>
+                                        Expected APY: ${allocation.expected_apy}% | Risk: ${allocation.risk_score.toFixed(1)}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                    } else {
+                        document.getElementById('strategyResult').innerHTML = `
+                            <div class="strategy-result">
+                                <p>${strategy.message}</p>
+                            </div>
+                        `;
+                    }
+                }
+            } catch (error) {
+                document.getElementById('strategyResult').innerHTML = `<div class="loading">Error optimizing strategy</div>`;
+            }
+        }
+
+        async function loadPortfolio() {
+            try {
+                const response = await fetch(`${API_BASE}/api/portfolio`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const performance = data.performance;
+                    document.getElementById('portfolioData').innerHTML = `
+                        <div class="performance-metrics">
+                            <div class="metric-card">
+                                <div class="metric-label">Total Value</div>
+                                <div class="metric-value">$${performance.current_value.toFixed(2)}</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Total Yield</div>
+                                <div class="metric-value" style="color: ${performance.yield_percentage >= 0 ? '#10b981' : '#ef4444'}">
+                                    ${performance.yield_percentage >= 0 ? '+' : ''}${performance.yield_percentage}%
+                                </div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Daily Yield</div>
+                                <div class="metric-value">$${performance.daily_yield}</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Monthly Yield</div>
+                                <div class="metric-value">$${performance.monthly_yield}</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Avg APY</div>
+                                <div class="metric-value">${performance.avg_apy}%</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Positions</div>
+                                <div class="metric-value">${performance.positions}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('portfolioData').innerHTML = `<div class="loading">Error loading portfolio</div>`;
+            }
+        }
+
+        async function compoundYield() {
+            const positionId = document.getElementById('positionId').value;
+            const autoCompound = document.getElementById('autoCompound').checked;
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/compound`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ position_id: positionId, auto_compound: autoCompound })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const result = data.result;
+                    document.getElementById('compoundResult').innerHTML = `
+                        <div class="strategy-result">
+                            <h4>Compound Result</h4>
+                            <p><strong>Status:</strong> <span style="color: ${result.success ? '#10b981' : '#ef4444'}">${result.success ? 'SUCCESS' : 'FAILED'}</span></p>
+                            <p><strong>Position:</strong> ${result.position_id}</p>
+                            <p><strong>Amount:</strong> $${result.amount}</p>
+                            <p><strong>Gas Cost:</strong> ${result.gas_cost} gwei</p>
+                            <p><strong>Timestamp:</strong> ${new Date(result.timestamp).toLocaleString()}</p>
+                        </div>
+                    `;
+                    loadPortfolio();
+                }
+            } catch (error) {
+                document.getElementById('compoundResult').innerHTML = `<div class="loading">Error compounding yield</div>`;
+            }
+        }
+
+        async function loadPerformanceHistory() {
+            try {
+                const response = await fetch(`${API_BASE}/api/performance-history`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const history = data.history.slice(-10); // Show last 10 days
+                    document.getElementById('performanceHistory').innerHTML = `
+                        <div class="pool-grid">
+                            ${history.map(day => `
+                                <div class="pool-card">
+                                    <div class="pool-header">
+                                        <span class="pool-name">Day ${day.day}</span>
+                                        <span class="pool-apy">${day.apy}% APY</span>
+                                    </div>
+                                    <div class="pool-details">
+                                        <div>Daily Yield: $${day.daily_yield}</div>
+                                        <div>Cumulative: $${day.cumulative_yield}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('performanceHistory').innerHTML = `<div class="loading">Error loading performance history</div>`;
+            }
+        }
+
+        // Load initial data
+        window.onload = function() {
+            loadLiquidityPools();
+            loadYieldRates();
+            loadPortfolio();
+        };
+    </script>
+</body>
+</html>
+
