@@ -1,23 +1,23 @@
 #!/bin/bash
-# Script to push all changes to GitHub for parampatel.dev
 
-cd "$(dirname "$0")"
+cd /Users/parampatel/parampatel-dev
 
-echo "🔄 Checking git status..."
+echo "=== Checking for changes ==="
 git status
 
 echo ""
-echo "📦 Staging all changes..."
+echo "=== Staging all changes ==="
 git add -A
 
 echo ""
-echo "💾 Committing changes..."
-git commit -m "Update portfolio: monospace font for hero name, live-reload server scripts, and dependency documentation"
+echo "=== Committing changes ==="
+git commit -m "Update portfolio: navbar always visible, improved transitions"
 
 echo ""
-echo "🚀 Pushing to GitHub (this will update parampatel.dev)..."
-git push
+echo "=== Pushing to GitHub (this will prompt for password) ==="
+git push origin main
 
 echo ""
-echo "✅ Done! Changes should be live on parampatel.dev shortly."
-
+echo "=== Push complete! ==="
+echo "Check your GitHub Actions at: https://github.com/parampateldev/parampateldev/actions"
+echo "You should see 'pages build and deployment' workflow running"

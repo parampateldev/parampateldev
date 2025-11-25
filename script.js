@@ -76,9 +76,11 @@ class NavigationManager {
                 e.preventDefault();
                 const target = document.querySelector(anchor.getAttribute('href'));
                 if (target) {
-                    const offsetTop = target.offsetTop - 80; // Account for fixed navbar
+                    const navbarHeight = 64; // 4rem = 64px
+                    const extraPadding = 20; // Extra space for better visibility
+                    const offsetTop = target.offsetTop - navbarHeight - extraPadding;
                     window.scrollTo({
-                        top: offsetTop,
+                        top: Math.max(0, offsetTop),
                         behavior: 'smooth'
                     });
                 }
@@ -97,7 +99,8 @@ class NavigationManager {
     }
 
     handleScroll() {
-        if (window.scrollY > 100) {
+        // Always show navbar with full opacity when scrolled
+        if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
@@ -737,6 +740,50 @@ function throttle(func, limit) {
     };
 }
 
+// Intro Screen Animation
+class IntroAnimation {
+    constructor() {
+        this.introScreen = document.getElementById('intro-screen');
+        this.mainContent = document.getElementById('main-content');
+        this.init();
+    }
+
+    init() {
+        if (!this.introScreen || !this.mainContent) return;
+
+stop        // Ensure navbar is always visible from the start
+        const navbar = document.getElementById('navbar');
+        if (navbar) {
+            navbar.style.visibility = 'visible';
+            navbar.style.opacity = '1';
+            navbar.style.position = 'fixed';
+            navbar.style.zIndex = '10000';
+        }
+
+        // Ensure page is at top
+        window.scrollTo(0, 0);
+
+        // Wait for intro animation to complete (profile at 0s, name lines at 0.3s and 0.6s, + 1s animation duration)
+        setTimeout(() => {
+            // Hide intro screen - fade out completely first
+            this.introScreen.classList.add('hidden');
+            
+            // Wait for intro to fully fade out (1.2s transition) before showing main content
+            setTimeout(() => {
+                // Then show main content
+                this.mainContent.classList.add('visible');
+                // Ensure page stays at top when content appears
+                window.scrollTo(0, 0);
+            }, 1200); // Wait for intro fade-out to complete
+        }, 2000); // Total intro duration (0.6s delay + 1s animation + 0.4s hold)
+    }
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    new IntroAnimation();
+});
+
 // Export for potential module use
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
@@ -746,6 +793,7 @@ if (typeof module !== 'undefined' && module.exports) {
         ContactFormManager,
         TypingAnimation,
         ParticleBackground,
-        PerformanceOptimizer
+        PerformanceOptimizer,
+        IntroAnimation
     };
 }

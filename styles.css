@@ -79,7 +79,136 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
+
+/* Intro Screen */
+.intro-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), 
+              visibility 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              filter 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.intro-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  filter: blur(20px);
+  transform: scale(1.1);
+}
+
+.intro-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+.intro-profile {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.intro-profile-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: introFadeInUp 0.8s ease-out forwards;
+  animation-delay: 0s;
+}
+
+.intro-name {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+  font-size: clamp(3rem, 12vw, 8rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.05em;
+  color: var(--text-primary);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.intro-name-line {
+  display: block;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(30px) scale(0.9);
+  animation: introFadeInUpScale 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.intro-name-line:nth-child(1) {
+  animation-delay: 0.3s;
+}
+
+.intro-name-line:nth-child(2) {
+  animation-delay: 0.6s;
+}
+
+@keyframes introFadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes introFadeInUpScale {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Main Content */
+.main-content {
+  opacity: 0;
+  filter: blur(20px);
+  transform: scale(0.95);
+  visibility: hidden;
+  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
+              filter 1s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 1s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0s linear 0s;
+}
+
+.main-content.visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
+  visibility: visible;
+  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
+              filter 1s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 1s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0s linear 0s;
+}
+
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
@@ -152,13 +281,16 @@ p {
 .navbar {
   position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
-  background-color: hsl(var(--background) / 0.8);
+  background-color: hsl(var(--background) / 0.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
-  z-index: 1000;
+  z-index: 10000;
   transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
 }
 
 .navbar.scrolled {
@@ -265,12 +397,16 @@ p {
 
 /* Hero Section - shadcn/ui style */
 .hero {
-  min-height: 100vh;
+  min-height: calc(100vh - 4rem);
   display: flex;
   align-items: center;
+  justify-content: center;
   padding-top: 4rem;
-  background: linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary));
+  padding-bottom: 2rem;
+  background: var(--bg-primary);
   position: relative;
+  margin-top: 4rem;
+  scroll-margin-top: 4rem;
 }
 
 .hero-container {
@@ -278,6 +414,92 @@ p {
   margin: 0 auto;
   padding: 0 1.5rem;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  gap: 2rem;
+}
+
+.hero-profile {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.hero-profile .profile-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-profile .profile-image:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-xl);
+}
+
+.hero-name {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+  font-size: clamp(3rem, 12vw, 8rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.05em;
+  color: var(--text-primary);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-name-line {
+  display: block;
+  margin: 0;
+  opacity: 0 !important;
+  transform: translateY(30px) scale(0.9);
+  transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.main-content.visible .hero-name-line {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1);
+}
+
+.main-content.visible .hero-name-line:nth-child(1) {
+  transition-delay: 0.3s;
+}
+
+.main-content.visible .hero-name-line:nth-child(2) {
+  transition-delay: 0.6s;
+}
+
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-content {
@@ -405,6 +627,16 @@ p {
 /* Section Styles - shadcn/ui style */
 section {
   padding: 6rem 0;
+  scroll-margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+section#home {
+  justify-content: center;
+  padding: 4rem 0;
+  min-height: calc(100vh - 4rem);
 }
 
 .section-header {

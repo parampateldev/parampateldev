@@ -12,7 +12,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Intro Screen -->
+    <div class="intro-screen" id="intro-screen">
+        <div class="intro-content">
+            <div class="intro-profile">
+                <img src="images/profile.JPG" alt="Param Patel" class="intro-profile-image">
+            </div>
+            <h1 class="intro-name">
+                <span class="intro-name-line">Param</span>
+                <span class="intro-name-line">Patel</span>
+            </h1>
+        </div>
+    </div>
+
+    <!-- Navigation - Always visible -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo">
@@ -38,11 +51,19 @@
         </div>
     </nav>
 
+    <!-- Main Content (hidden initially) -->
+    <div class="main-content" id="main-content">
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-container">
             <div class="hero-intro">
-                <h1 class="hero-name">Param Patel</h1>
+                <div class="hero-profile">
+                    <img src="images/profile.JPG" alt="Param Patel" class="profile-image">
+                </div>
+                <h1 class="hero-name">
+                    <span class="hero-name-line">Param</span>
+                    <span class="hero-name-line">Patel</span>
+                </h1>
             </div>
             <div class="scroll-indicator">
                 <div class="scroll-arrow">
@@ -383,6 +404,7 @@
             </div>
         </div>
     </footer>
+    </div> <!-- End main-content -->
 
     <script src="script.js"></script>
 </body>
