@@ -38,25 +38,25 @@
 }
 
 [data-theme="dark"] {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --card: 0 0% 5%;
+  --card-foreground: 0 0% 100%;
+  --popover: 0 0% 5%;
+  --popover-foreground: 0 0% 100%;
   --primary: 217.2 91.2% 59.8%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 0 0% 10%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 0 0% 10%;
+  --muted-foreground: 0 0% 70%;
+  --accent: 0 0% 10%;
+  --accent-foreground: 0 0% 100%;
   --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 224.3 76.3% 48%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 0 0% 15%;
+  --input: 0 0% 15%;
+  --ring: 217.2 91.2% 59.8%;
 }
 
 /* Reset and Base Styles */
@@ -143,12 +143,13 @@ body {
 }
 
 .intro-name {
-  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
   font-size: clamp(3rem, 12vw, 8rem);
   font-weight: 700;
   line-height: 1.1;
-  letter-spacing: -0.05em;
+  letter-spacing: 0.02em;
   color: var(--text-primary);
+  font-style: italic;
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -455,12 +456,13 @@ p {
 }
 
 .hero-name {
-  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
   font-size: clamp(3rem, 12vw, 8rem);
   font-weight: 700;
   line-height: 1.1;
-  letter-spacing: -0.05em;
+  letter-spacing: 0.02em;
   color: var(--text-primary);
+  font-style: italic;
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -626,17 +628,30 @@ p {
 
 /* Section Styles - shadcn/ui style */
 section {
-  padding: 6rem 0;
+  padding: 4rem 0;
   scroll-margin-top: 5rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  min-height: auto;
 }
 
 section#home {
   justify-content: center;
   padding: 4rem 0;
   min-height: calc(100vh - 4rem);
+}
+
+section#skills {
+  padding: 3rem 0;
+}
+
+section#projects {
+  padding: 4rem 0;
+}
+
+section#contact {
+  padding: 4rem 0;
 }
 
 .section-header {
@@ -695,9 +710,10 @@ section#home {
 
 .about-stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
   margin-top: 2rem;
+  max-width: 500px;
 }
 
 .stat {
@@ -752,14 +768,15 @@ section#home {
 /* Skills Section */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
+  max-width: 100%;
 }
 
 .skill-category {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
   transition: all 0.2s ease;
@@ -772,24 +789,24 @@ section#home {
 }
 
 .category-title {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 600;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   color: var(--text-primary);
   text-align: center;
 }
 
 .skill-items {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
 }
 
 .skill-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem;
+  padding: 0.75rem 0.5rem;
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: calc(var(--radius) - 2px);
@@ -805,16 +822,22 @@ section#home {
 }
 
 .skill-item i {
-  font-size: 2rem;
+  font-size: 1.75rem;
   color: var(--accent-primary);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.skill-item i.fab.fa-vue {
+  color: #4FC08D;
 }
 
 .skill-item span {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 500;
   color: var(--text-primary);
   text-align: center;
+  line-height: 1.2;
 }
 
 /* Projects Section */
@@ -824,8 +847,9 @@ section#home {
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 1.5rem;
+  max-width: 100%;
 }
 
 .project-card {
@@ -1078,6 +1102,16 @@ section#home {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .nav-menu {
     position: fixed;
@@ -1134,8 +1168,17 @@ section#home {
   }
 
   .about-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .skills-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+
+  .skill-items {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .contact-content {
@@ -1182,10 +1225,24 @@ section#home {
 
   .skills-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .skill-items {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .skill-item {
+    padding: 0.5rem;
+  }
+
+  .skill-item i {
+    font-size: 1.5rem;
+  }
+
+  .skill-item span {
+    font-size: 0.7rem;
   }
 }
 
