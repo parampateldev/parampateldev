@@ -275,35 +275,73 @@ class ContactFormManager {
     }
 }
 
-// Typing Animation for Hero Title
+// Typing Animation with Cursor
 class TypingAnimation {
     constructor() {
         this.init();
     }
 
     init() {
-        // Support both .hero-name (portfolio) and .hero-title (other pages)
-        const heroTitle = document.querySelector('.hero-name') || document.querySelector('.hero-title');
-        if (heroTitle) {
-            this.animateTitle(heroTitle);
+        // Intro screen typing
+        this.animateIntro();
+        
+        // Hero section typing (after main content is visible)
+        const mainContent = document.getElementById('main-content');
+        if (mainContent) {
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        if (mainContent.classList.contains('visible')) {
+                            setTimeout(() => this.animateHero(), 500);
+                            observer.disconnect();
+                        }
+                    }
+                });
+            });
+            observer.observe(mainContent, { attributes: true });
         }
     }
 
-    animateTitle(element) {
-        const text = element.textContent;
-        element.textContent = '';
+    animateIntro() {
+        const introGreeting = document.querySelector('.intro-greeting');
+        const introName = document.querySelector('.intro-name-typing .typing-text');
         
-        let i = 0;
-        const typeWriter = () => {
-            if (i < text.length) {
-                element.textContent += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 50);
-            }
-        };
+        if (introName) {
+            const nameText = introName.textContent;
+            introName.textContent = '';
+            this.typeText(introName, nameText, 100, 800);
+        }
+    }
 
-        // Start typing animation after a short delay
-        setTimeout(typeWriter, 1000);
+    animateHero() {
+        const heroName = document.querySelector('.hero-name-typing .typing-text');
+        const heroRole = document.querySelector('.hero-role-typing .typing-text-role');
+        
+        if (heroName) {
+            const nameText = heroName.textContent;
+            heroName.textContent = '';
+            this.typeText(heroName, nameText, 100, 500);
+        }
+        
+        if (heroRole) {
+            const roleText = heroRole.textContent;
+            heroRole.textContent = '';
+            this.typeText(heroRole, roleText, 100, 2000);
+        }
+    }
+
+    typeText(element, text, speed, delay = 0) {
+        setTimeout(() => {
+            let i = 0;
+            const typeWriter = () => {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                }
+            };
+            typeWriter();
+        }, delay);
     }
 }
 
@@ -324,19 +362,23 @@ class ParticleBackground {
     }
 
     createCanvas() {
-        this.canvas = document.createElement('canvas');
-        this.canvas.style.position = 'fixed';
-        this.canvas.style.top = '0';
-        this.canvas.style.left = '0';
-        this.canvas.style.width = '100%';
-        this.canvas.style.height = '100%';
-        this.canvas.style.pointerEvents = 'none';
-        this.canvas.style.zIndex = '-1';
-        this.canvas.style.opacity = '0.1';
-        
-        document.body.appendChild(this.canvas);
+        // Use existing canvas from HTML if available, otherwise create one
+        this.canvas = document.getElementById('particle-canvas');
+        if (!this.canvas) {
+            this.canvas = document.createElement('canvas');
+            this.canvas.id = 'particle-canvas';
+            this.canvas.className = 'particle-canvas';
+            this.canvas.style.position = 'fixed';
+            this.canvas.style.top = '0';
+            this.canvas.style.left = '0';
+            this.canvas.style.width = '100%';
+            this.canvas.style.height = '100%';
+            this.canvas.style.pointerEvents = 'none';
+            this.canvas.style.zIndex = '0';
+            this.canvas.style.opacity = '0.3';
+            document.body.appendChild(this.canvas);
+        }
         this.ctx = this.canvas.getContext('2d');
-        
         this.resizeCanvas();
     }
 
@@ -374,8 +416,26 @@ class ParticleBackground {
             // Draw particle
             this.ctx.beginPath();
             this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-            this.ctx.fillStyle = '#4f46e5';
+            const blueColor = getComputedStyle(document.documentElement).getPropertyValue('--umich-blue').trim();
+            this.ctx.fillStyle = `hsl(${blueColor})`;
             this.ctx.fill();
+            
+            // Draw connections
+            this.particles.forEach(otherParticle => {
+                if (otherParticle === particle) return;
+                const dx = particle.x - otherParticle.x;
+                const dy = particle.y - otherParticle.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 150) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(particle.x, particle.y);
+                    this.ctx.lineTo(otherParticle.x, otherParticle.y);
+                    this.ctx.strokeStyle = `hsl(${blueColor}, ${1 - distance / 150 * 100}%)`;
+                    this.ctx.lineWidth = 0.5;
+                    this.ctx.stroke();
+                }
+            });
         });
         
         requestAnimationFrame(() => this.animate());
@@ -666,7 +726,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize optional features conditionally
     // Particle background (can be disabled for minimalist design)
-    if (document.querySelector('.hero')) {
+    if (document.querySelector('.hero') || document.getElementById('particle-canvas')) {
         new ParticleBackground();
     }
 
@@ -677,6 +737,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.querySelector('.tab-btn')) {
         new MenuTabManager();
     }
+    
+    // Initialize new enhancements
+    new ScrollProgress();
+    new BackToTop();
+    new SectionNavDots();
+    new ScrollAnimations();
+    new ParallaxScroll();
+    new MicroInteractions();
 
     // Add some interactive effects
     addSkillHoverEffects();
@@ -751,7 +819,7 @@ class IntroAnimation {
     init() {
         if (!this.introScreen || !this.mainContent) return;
 
-stop        // Ensure navbar is always visible from the start
+        // Ensure navbar is always visible from the start
         const navbar = document.getElementById('navbar');
         if (navbar) {
             navbar.style.visibility = 'visible';
@@ -763,7 +831,7 @@ stop        // Ensure navbar is always visible from the start
         // Ensure page is at top
         window.scrollTo(0, 0);
 
-        // Wait for intro animation to complete (profile at 0s, name lines at 0.3s and 0.6s, + 1s animation duration)
+        // Wait for intro typing animation to complete (greeting at 0.3s, name typing ~2s)
         setTimeout(() => {
             // Hide intro screen - fade out completely first
             this.introScreen.classList.add('hidden');
@@ -775,14 +843,246 @@ stop        // Ensure navbar is always visible from the start
                 // Ensure page stays at top when content appears
                 window.scrollTo(0, 0);
             }, 1200); // Wait for intro fade-out to complete
-        }, 2000); // Total intro duration (0.6s delay + 1s animation + 0.4s hold)
+        }, 3000); // Total intro duration (typing animation complete)
     }
 }
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    new IntroAnimation();
+    const introScreen = document.getElementById('intro-screen');
+    const mainContent = document.getElementById('main-content');
+    
+    // If no intro screen, show main content immediately
+    if (!introScreen || introScreen.classList.contains('hidden')) {
+        if (mainContent) {
+            mainContent.classList.add('visible');
+        }
+    } else {
+        new IntroAnimation();
+    }
+    
+    // Fallback: ensure main content is visible after a delay
+    setTimeout(() => {
+        if (mainContent && !mainContent.classList.contains('visible')) {
+            mainContent.classList.add('visible');
+        }
+    }, 5000);
 });
+
+// ============================================
+// ENHANCEMENTS - New Features JavaScript
+// ============================================
+
+// Scroll Progress Indicator
+class ScrollProgress {
+    constructor() {
+        this.progressBar = document.getElementById('scroll-progress');
+        this.init();
+    }
+
+    init() {
+        if (!this.progressBar) return;
+        
+        window.addEventListener('scroll', () => {
+            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (window.scrollY / windowHeight) * 100;
+            this.progressBar.style.width = scrolled + '%';
+        });
+    }
+}
+
+// Back to Top Button
+class BackToTop {
+    constructor() {
+        this.button = document.getElementById('back-to-top');
+        this.init();
+    }
+
+    init() {
+        if (!this.button) return;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                this.button.classList.add('visible');
+            } else {
+                this.button.classList.remove('visible');
+            }
+        });
+
+        this.button.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+}
+
+// Section Navigation Dots
+class SectionNavDots {
+    constructor() {
+        this.dots = document.querySelectorAll('.nav-dot');
+        this.sections = document.querySelectorAll('section[id]');
+        this.init();
+    }
+
+    init() {
+        if (!this.dots.length) return;
+
+        window.addEventListener('scroll', () => {
+            this.updateActiveDot();
+        });
+
+        this.dots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = dot.getAttribute('data-section');
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    const navbarHeight = 64;
+                    const offsetTop = section.offsetTop - navbarHeight;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    }
+
+    updateActiveDot() {
+        const scrollPos = window.scrollY + 200;
+        
+        this.sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+
+            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                this.dots.forEach(dot => {
+                    dot.classList.remove('active');
+                    if (dot.getAttribute('data-section') === sectionId) {
+                        dot.classList.add('active');
+                    }
+                });
+            }
+        });
+    }
+}
+
+// Scroll Animations (AOS-like)
+class ScrollAnimations {
+    constructor() {
+        this.elements = document.querySelectorAll('[data-aos]');
+        this.init();
+    }
+
+    init() {
+        if (!this.elements.length) return;
+
+        // Add js-enabled class to html
+        document.documentElement.classList.add('js-enabled');
+
+        // Make all elements visible immediately, then animate on scroll
+        this.elements.forEach(el => {
+            el.classList.add('aos-animate');
+        });
+
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) {
+            return;
+        }
+
+        // Reset for animation
+        this.elements.forEach(el => {
+            el.classList.remove('aos-animate');
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const delay = entry.target.getAttribute('data-aos-delay') || 0;
+                    setTimeout(() => {
+                        entry.target.classList.add('aos-animate');
+                    }, delay);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        this.elements.forEach(el => {
+            // Check if element is already in viewport
+            const rect = el.getBoundingClientRect();
+            const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+            
+            if (isVisible) {
+                // Already visible, animate immediately
+                el.classList.add('aos-animate');
+            } else {
+                // Not visible, observe for scroll
+                observer.observe(el);
+            }
+        });
+    }
+}
+
+// Parallax Scrolling
+class ParallaxScroll {
+    constructor() {
+        this.elements = document.querySelectorAll('.graph-background');
+        this.init();
+    }
+
+    init() {
+        if (!this.elements.length) return;
+        
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) return;
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            this.elements.forEach(element => {
+                const speed = 0.5;
+                element.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+    }
+}
+
+// Micro-interactions
+class MicroInteractions {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        const buttons = document.querySelectorAll('button, .btn-about-me, .project-link, .social-icon');
+        buttons.forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.style.transform = 'scale(0.95)';
+            });
+            button.addEventListener('mouseup', () => {
+                button.style.transform = '';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = '';
+            });
+        });
+
+        const icons = document.querySelectorAll('.social-icon i, .project-link i');
+        icons.forEach(icon => {
+            icon.parentElement.addEventListener('mouseenter', () => {
+                icon.style.transform = 'scale(1.2) rotate(5deg)';
+            });
+            icon.parentElement.addEventListener('mouseleave', () => {
+                icon.style.transform = '';
+            });
+        });
+    }
+}
 
 // Export for potential module use
 if (typeof module !== 'undefined' && module.exports) {
@@ -794,6 +1094,12 @@ if (typeof module !== 'undefined' && module.exports) {
         TypingAnimation,
         ParticleBackground,
         PerformanceOptimizer,
-        IntroAnimation
+        IntroAnimation,
+        ScrollProgress,
+        BackToTop,
+        SectionNavDots,
+        ScrollAnimations,
+        ParallaxScroll,
+        MicroInteractions
     };
 }

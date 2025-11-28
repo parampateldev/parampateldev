@@ -1,10 +1,47 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" class="js-enabled">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Param Patel - Developer Portfolio</title>
-    <meta name="description" content="Param Patel - Full Stack Developer, Software Engineer, and Tech Enthusiast. Building scalable applications and solving complex problems.">
+    <title>Param Patel - Computer Science Student | University of Michigan</title>
+    <meta name="description" content="Param Patel - Computer Science Student at University of Michigan. Full Stack Developer, Software Engineer, and Tech Enthusiast. Building scalable applications and solving complex problems.">
+    <meta name="keywords" content="Param Patel, Computer Science, University of Michigan, Full Stack Developer, Software Engineer, Web Developer, Portfolio">
+    <meta name="author" content="Param Patel">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://parampatel.dev/">
+    <meta property="og:title" content="Param Patel - Computer Science Student | University of Michigan">
+    <meta property="og:description" content="Computer Science Student at University of Michigan. Full Stack Developer building scalable applications.">
+    <meta property="og:image" content="https://parampatel.dev/images/profile.JPG">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://parampatel.dev/">
+    <meta property="twitter:title" content="Param Patel - Computer Science Student">
+    <meta property="twitter:description" content="Computer Science Student at University of Michigan. Full Stack Developer.">
+    <meta property="twitter:image" content="https://parampatel.dev/images/profile.JPG">
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Param Patel",
+      "url": "https://parampatel.dev",
+      "image": "https://parampatel.dev/images/profile.JPG",
+      "jobTitle": "Computer Science Student",
+      "worksFor": {
+        "@type": "EducationalOrganization",
+        "name": "University of Michigan"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/parampat",
+        "https://github.com/parampateldev"
+      ],
+      "email": "parampat@umich.edu"
+    }
+    </script>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,15 +50,45 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Skip to Content Link (Accessibility) -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+    
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+    
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <!-- Section Navigation Dots -->
+    <nav class="section-nav-dots" id="section-nav-dots" aria-label="Section navigation">
+        <a href="#home" class="nav-dot active" data-section="home" aria-label="Home section">
+            <span class="dot-tooltip">Home</span>
+        </a>
+        <a href="#about" class="nav-dot" data-section="about" aria-label="About section">
+            <span class="dot-tooltip">About</span>
+        </a>
+        <a href="#skills" class="nav-dot" data-section="skills" aria-label="Skills section">
+            <span class="dot-tooltip">Skills</span>
+        </a>
+        <a href="#projects" class="nav-dot" data-section="projects" aria-label="Projects section">
+            <span class="dot-tooltip">Projects</span>
+        </a>
+        <a href="#contact" class="nav-dot" data-section="contact" aria-label="Contact section">
+            <span class="dot-tooltip">Contact</span>
+        </a>
+    </nav>
+    
+    <!-- Particle Background Container -->
+    <canvas id="particle-canvas" class="particle-canvas"></canvas>
     <!-- Intro Screen -->
     <div class="intro-screen" id="intro-screen">
         <div class="intro-content">
-            <div class="intro-profile">
-                <img src="images/profile.JPG" alt="Param Patel" class="intro-profile-image">
-            </div>
-            <h1 class="intro-name">
-                <span class="intro-name-line">Param</span>
-                <span class="intro-name-line">Patel</span>
+            <h1 class="intro-greeting">Hi There,</h1>
+            <h1 class="intro-name-typing">
+                <span class="typing-text">I'm Param Patel</span>
+                <span class="typing-cursor">|</span>
             </h1>
         </div>
     </div>
@@ -56,26 +123,46 @@
     <div class="main-content" id="main-content">
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <div class="graph-background"></div>
         <div class="hero-container">
-            <div class="hero-intro">
-                <div class="hero-profile">
-                    <img src="images/profile.JPG" alt="Param Patel" class="profile-image">
+            <div class="hero-content">
+                <div class="hero-left">
+                    <h1 class="hero-greeting">Hi There,</h1>
+                    <h1 class="hero-name-typing">
+                        <span class="typing-text">I'm Param Patel</span>
+                        <span class="typing-cursor">|</span>
+                    </h1>
+                    <h2 class="hero-role-typing">
+                        <span class="typing-text-role">Computer Science Student at University of Michigan</span>
+                        <span class="typing-cursor">|</span>
+                    </h2>
+                    <a href="#about" class="btn-about-me">
+                        About Me
+                        <i class="fas fa-arrow-down"></i>
+                    </a>
+                    <div class="hero-social">
+                        <a href="https://www.linkedin.com/in/parampat" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://github.com/parampateldev" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="mailto:parampat@umich.edu" class="social-icon" aria-label="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
                 </div>
-                <h1 class="hero-name">
-                    <span class="hero-name-line">Param</span>
-                    <span class="hero-name-line">Patel</span>
-                </h1>
-            </div>
-            <div class="scroll-indicator">
-                <div class="scroll-arrow">
-                    <i class="fas fa-chevron-down"></i>
+                <div class="hero-right">
+                    <div class="hero-profile-wrapper">
+                        <img src="images/profile.JPG" alt="Param Patel" class="hero-profile-image" loading="lazy" width="400" height="400">
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="about">
+    <section id="about" class="about" data-aos="fade-up">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">About Me</h2>
@@ -116,7 +203,7 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="skills">
+    <section id="skills" class="skills" data-aos="fade-up">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Skills & Technologies</h2>
@@ -215,16 +302,23 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="projects">
+    <section id="projects" class="projects" data-aos="fade-up">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Featured Projects</h2>
                 <p class="section-subtitle">Some of my recent work</p>
             </div>
             <div class="projects-grid">
-                <div class="project-card">
+                <div class="project-card" data-aos="fade-up" data-aos-delay="0">
                     <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=500&fit=crop&crop=center" alt="ML Quant Finance Platform">
+                        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=500&fit=crop&crop=center" alt="ML Quant Finance Platform" loading="lazy" width="800" height="500">
+                        <div class="project-overlay">
+                            <div class="project-tech-badges">
+                                <span class="tech-badge">Python</span>
+                                <span class="tech-badge">PyTorch</span>
+                                <span class="tech-badge">React</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">ML Quant Finance Platform</h3>
@@ -239,20 +333,27 @@
                             <span class="tech-tag">Flask</span>
                         </div>
                         <div class="project-links">
-                            <a href="https://parampateldev.github.io/ml-quant-finance/" target="_blank" rel="noopener" class="project-link live-demo">
+                            <a href="https://parampateldev.github.io/ml-quant-finance/" target="_blank" rel="noopener" class="project-link live-demo" aria-label="View ML Quant Finance live demo">
                                 <i class="fas fa-external-link-alt"></i>
                                 Live Demo
                             </a>
-                            <a href="https://github.com/parampateldev/ml-quant-finance" target="_blank" rel="noopener" class="project-link github">
+                            <a href="https://github.com/parampateldev/ml-quant-finance" target="_blank" rel="noopener" class="project-link github" aria-label="View ML Quant Finance on GitHub">
                                 <i class="fab fa-github"></i>
                                 GitHub
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="project-card">
+                <div class="project-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&h=500&fit=crop&crop=center" alt="TaskFlow AI">
+                        <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&h=500&fit=crop&crop=center" alt="TaskFlow AI" loading="lazy" width="800" height="500">
+                        <div class="project-overlay">
+                            <div class="project-tech-badges">
+                                <span class="tech-badge">Node.js</span>
+                                <span class="tech-badge">Express</span>
+                                <span class="tech-badge">REST API</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">TaskFlow AI - Priority Manager</h3>
@@ -267,20 +368,27 @@
                             <span class="tech-tag">JavaScript</span>
                         </div>
                         <div class="project-links">
-                            <a href="projects/task-priority-api/index.html" target="_blank" rel="noopener" class="project-link live-demo">
+                            <a href="projects/task-priority-api/index.html" target="_blank" rel="noopener" class="project-link live-demo" aria-label="View TaskFlow AI live demo">
                                 <i class="fas fa-external-link-alt"></i>
                                 Live Demo
                             </a>
-                            <a href="https://github.com/parampateldev/task-priority-api" target="_blank" rel="noopener" class="project-link github">
+                            <a href="https://github.com/parampateldev/task-priority-api" target="_blank" rel="noopener" class="project-link github" aria-label="View TaskFlow AI on GitHub">
                                 <i class="fab fa-github"></i>
                                 GitHub
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="project-card">
+                <div class="project-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=800&h=500&fit=crop&crop=center" alt="Weather Dashboard">
+                        <img src="https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=800&h=500&fit=crop&crop=center" alt="Weather Dashboard" loading="lazy" width="800" height="500">
+                        <div class="project-overlay">
+                            <div class="project-tech-badges">
+                                <span class="tech-badge">JavaScript</span>
+                                <span class="tech-badge">API</span>
+                                <span class="tech-badge">Chart.js</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">Weather Dashboard</h3>
@@ -295,11 +403,11 @@
                             <span class="tech-tag">Chart.js</span>
                         </div>
                         <div class="project-links">
-                            <a href="https://parampateldev.github.io/weather-dashboard" target="_blank" rel="noopener" class="project-link live-demo">
+                            <a href="https://parampateldev.github.io/weather-dashboard" target="_blank" rel="noopener" class="project-link live-demo" aria-label="View Weather Dashboard live demo">
                                 <i class="fas fa-external-link-alt"></i>
                                 Live Demo
                             </a>
-                            <a href="https://github.com/parampateldev/weather-dashboard" target="_blank" rel="noopener" class="project-link github">
+                            <a href="https://github.com/parampateldev/weather-dashboard" target="_blank" rel="noopener" class="project-link github" aria-label="View Weather Dashboard on GitHub">
                                 <i class="fab fa-github"></i>
                                 GitHub
                             </a>
@@ -311,7 +419,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="contact">
+    <section id="contact" class="contact" data-aos="fade-up">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Get In Touch</h2>
