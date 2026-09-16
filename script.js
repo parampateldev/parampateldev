@@ -33,7 +33,7 @@ const ctx = canvas.getContext('2d');
 let w, h, dpr;
 const blobs=[{x:.74,y:.25,r:.38,c:'89,123,255',a:.19},{x:.27,y:.63,r:.3,c:'201,255,74',a:.1},{x:.84,y:.78,r:.25,c:'255,112,72',a:.1}];
 function resize(){dpr=Math.min(devicePixelRatio,2);w=innerWidth;h=innerHeight;canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
-function draw(t){ctx.clearRect(0,0,w,h);blobs.forEach((b,i)=>{const x=(b.x+Math.sin(t*.00025+i)*.1+(cursorX/w-.5)*.07)*w;const y=(b.y+Math.cos(t*.0002+i)*.09+(cursorY/h-.5)*.05)*h;const r=b.r*Math.max(w,h);const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,`rgba(${b.c},${b.a})`);g.addColorStop(.5,`rgba(${b.c},${b.a*.4})`);g.addColorStop(1,`rgba(${b.c},0)`);ctx.fillStyle=g;ctx.fillRect(0,0,w,h)});requestAnimationFrame(draw)}
+function draw(t){ctx.clearRect(0,0,w,h);blobs.forEach((b,i)=>{const x=(b.x+Math.sin(t*.00025+i)*.1+(mouseX/w-.5)*.07)*w;const y=(b.y+Math.cos(t*.0002+i)*.09+(mouseY/h-.5)*.05)*h;const r=b.r*Math.max(w,h);const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,`rgba(${b.c},${b.a})`);g.addColorStop(.5,`rgba(${b.c},${b.a*.4})`);g.addColorStop(1,`rgba(${b.c},0)`);ctx.fillStyle=g;ctx.fillRect(0,0,w,h)});requestAnimationFrame(draw)}
 addEventListener('resize',resize);resize();requestAnimationFrame(draw);
 
 const heroTitle=document.querySelector('h1');
