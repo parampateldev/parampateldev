@@ -1,32 +1,26 @@
 document.getElementById('year').textContent = new Date().getFullYear();
 
 const root = document.documentElement;
-const metas = [...document.querySelectorAll('.meta')];
-let mouseX = innerWidth * .7, mouseY = innerHeight * .32;
-let lastMouseX = mouseX, lastMouseY = mouseY;
-const fluidPoints = metas.map((_, i) => ({ x: mouseX - i * 18, y: mouseY, vx: 0, vy: 0 }));
-addEventListener('pointermove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
-function moveFluid(t){
-  const scaleX = 1000 / innerWidth, scaleY = 1000 / innerHeight;
-  const speed = Math.hypot(mouseX-lastMouseX, mouseY-lastMouseY);
-  fluidPoints.forEach((p,i) => {
-    const leader = i === 0 ? {x:mouseX,y:mouseY} : fluidPoints[i-1];
-    const spring = i === 0 ? .065 : .105;
-    p.vx += (leader.x-p.x)*spring;
-    p.vy += (leader.y-p.y)*spring;
-    p.vx *= i === 0 ? .77 : .72;
-    p.vy *= i === 0 ? .77 : .72;
-    p.x += p.vx; p.y += p.vy;
-    const wave = Math.sin(t*.002+i*1.15)*(8+i*1.6);
-    const x = p.x*scaleX + Math.cos(t*.0014+i)*wave;
-    const y = p.y*scaleY + Math.sin(t*.0017+i)*wave;
-    const stretch = Math.min(1.65,1+speed*.006*(1-i/metas.length));
-    metas[i].setAttribute('transform',`translate(${x} ${y}) rotate(${Math.atan2(p.vy,p.vx)*57.3}) scale(${stretch} ${2-stretch*.55})`);
-  });
-  lastMouseX += (mouseX-lastMouseX)*.18; lastMouseY += (mouseY-lastMouseY)*.18;
-  requestAnimationFrame(moveFluid);
+const heroPortrait = document.querySelector('.hero-portrait');
+let targetX = 0, targetY = 0, tiltX = 0, tiltY = 0;
+addEventListener('pointermove', (e) => {
+  targetX = (e.clientX / innerWidth - .5);
+  targetY = (e.clientY / innerHeight - .5);
+});
+function trackPortrait(){
+  tiltX += (targetX * 5 - tiltX) * .045;
+  tiltY += (targetY * -4 - tiltY) * .045;
+  if(heroPortrait){
+    heroPortrait.style.setProperty('--tilt-x', tiltX + 'deg');
+    heroPortrait.style.setProperty('--tilt-y', tiltY + 'deg');
+    heroPortrait.style.setProperty('--look-x', tiltX * .45 + 'px');
+    heroPortrait.style.setProperty('--look-y', -tiltY * .35 + 'px');
+  }
+  requestAnimationFrame(trackPortrait);
 }
-requestAnimationFrame(moveFluid);
+requestAnimationFrame(trackPortrait);
+let mouseX=innerWidth*.5, mouseY=innerHeight*.5;
+addEventListener('pointermove',e=>{mouseX=e.clientX;mouseY=e.clientY});
 
 const canvas = document.getElementById('field');
 const ctx = canvas.getContext('2d');
