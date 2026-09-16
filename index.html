@@ -1,516 +1,150 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark" class="js-enabled">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Param Patel - Computer Science Student | University of Michigan</title>
-    <meta name="description" content="Param Patel - Computer Science Student at University of Michigan. Full Stack Developer, Software Engineer, and Tech Enthusiast. Building scalable applications and solving complex problems.">
-    <meta name="keywords" content="Param Patel, Computer Science, University of Michigan, Full Stack Developer, Software Engineer, Web Developer, Portfolio">
-    <meta name="author" content="Param Patel">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://parampatel.dev/">
-    <meta property="og:title" content="Param Patel - Computer Science Student | University of Michigan">
-    <meta property="og:description" content="Computer Science Student at University of Michigan. Full Stack Developer building scalable applications.">
-    <meta property="og:image" content="https://parampatel.dev/images/profile.JPG">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://parampatel.dev/">
-    <meta property="twitter:title" content="Param Patel - Computer Science Student">
-    <meta property="twitter:description" content="Computer Science Student at University of Michigan. Full Stack Developer.">
-    <meta property="twitter:image" content="https://parampatel.dev/images/profile.JPG">
-    
-    <!-- Structured Data (JSON-LD) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Param Patel",
-      "url": "https://parampatel.dev",
-      "image": "https://parampatel.dev/images/profile.JPG",
-      "jobTitle": "Computer Science Student",
-      "worksFor": {
-        "@type": "EducationalOrganization",
-        "name": "University of Michigan"
-      },
-      "sameAs": [
-        "https://www.linkedin.com/in/parampat",
-        "https://github.com/parampateldev"
-      ],
-      "email": "parampat@umich.edu"
-    }
-    </script>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Param Patel is a computer science student and software engineer building distributed systems, developer tools, and multiplayer web products.">
+  <meta name="theme-color" content="#090b10">
+  <title>Param Patel | Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Skip to Content Link (Accessibility) -->
-    <a href="#main-content" class="skip-to-content">Skip to main content</a>
-    
-    <!-- Scroll Progress Indicator -->
-    <div class="scroll-progress" id="scroll-progress"></div>
-    
-    <!-- Back to Top Button -->
-    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-    
-    <!-- Section Navigation Dots -->
-    <nav class="section-nav-dots" id="section-nav-dots" aria-label="Section navigation">
-        <a href="#home" class="nav-dot active" data-section="home" aria-label="Home section">
-            <span class="dot-tooltip">Home</span>
-        </a>
-        <a href="#about" class="nav-dot" data-section="about" aria-label="About section">
-            <span class="dot-tooltip">About</span>
-        </a>
-        <a href="#skills" class="nav-dot" data-section="skills" aria-label="Skills section">
-            <span class="dot-tooltip">Skills</span>
-        </a>
-        <a href="#projects" class="nav-dot" data-section="projects" aria-label="Projects section">
-            <span class="dot-tooltip">Projects</span>
-        </a>
-        <a href="#contact" class="nav-dot" data-section="contact" aria-label="Contact section">
-            <span class="dot-tooltip">Contact</span>
-        </a>
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="mark" href="#top" aria-label="Param Patel home">PP<span>.</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#work">Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#about">About</a>
     </nav>
-    
-    <!-- Particle Background Container -->
-    <canvas id="particle-canvas" class="particle-canvas"></canvas>
-    <!-- Intro Screen -->
-    <div class="intro-screen" id="intro-screen">
-        <div class="intro-content">
-            <h1 class="intro-greeting">Hi There,</h1>
-            <h1 class="intro-name-typing">
-                <span class="typing-text">I'm Param Patel</span>
-                <span class="typing-cursor">|</span>
-            </h1>
-        </div>
-    </div>
+    <a class="nav-cta" href="mailto:parampat@umich.edu">Let's talk</a>
+  </header>
 
-    <!-- Navigation - Always visible -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="#home">Param Patel</a>
-            </div>
-            <div class="nav-menu" id="nav-menu">
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </div>
-            <div class="nav-toggle" id="nav-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-            <div class="theme-toggle">
-                <button id="theme-toggle" class="theme-btn">
-                    <i class="fas fa-moon" id="theme-icon"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content (hidden initially) -->
-    <div class="main-content" id="main-content">
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="graph-background"></div>
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-left">
-                    <h1 class="hero-greeting">Hi There,</h1>
-                    <h1 class="hero-name-typing">
-                        <span class="typing-text">I'm Param Patel</span>
-                        <span class="typing-cursor">|</span>
-                    </h1>
-                    <h2 class="hero-role-typing">
-                        <span class="typing-text-role">Computer Science Student at University of Michigan</span>
-                        <span class="typing-cursor">|</span>
-                    </h2>
-                    <a href="#about" class="btn-about-me">
-                        About Me
-                        <i class="fas fa-arrow-down"></i>
-                    </a>
-                    <div class="hero-social">
-                        <a href="https://www.linkedin.com/in/parampat" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="https://github.com/parampateldev" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="mailto:parampat@umich.edu" class="social-icon" aria-label="Email">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-right">
-                    <div class="hero-profile-wrapper">
-                        <img src="images/profile.JPG" alt="Param Patel" class="hero-profile-image" loading="lazy" width="400" height="400">
-                    </div>
-                </div>
-            </div>
-        </div>
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="eyebrow"><span></span> Computer Science at Michigan</div>
+      <h1 id="hero-title">I build systems that<br><em>hold up in the real world.</em></h1>
+      <p class="hero-copy">I'm Param, a software engineer working across distributed systems, product engineering, and developer tools.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#work">See my work <span>↘</span></a>
+        <a class="button ghost" href="https://github.com/parampateldev" target="_blank" rel="noreferrer">GitHub <span>↗</span></a>
+      </div>
+      <div class="hero-meta">
+        <div><span class="meta-label">Currently</span><strong>Building & teaching</strong></div>
+        <div><span class="meta-label">Based in</span><strong>Michigan</strong></div>
+        <div><span class="meta-label">Focus</span><strong>Systems + product</strong></div>
+      </div>
+      <div class="scroll-cue" aria-hidden="true"><span></span> Scroll to explore</div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="about" data-aos="fade-up">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">About Me</h2>
-                <p class="section-subtitle">Get to know me better</p>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <p class="about-description">
-                        I'm a Computer Science student at the University of Michigan with a passion for 
-                        creating efficient, scalable, and user-friendly applications. With experience in modern web 
-                        technologies, I enjoy turning complex problems into simple, beautiful solutions.
-                    </p>
-                    <p class="about-description">
-                        When I'm not coding or studying, you can find me exploring new technologies, contributing 
-                        to open source projects, or sharing knowledge with the developer community.
-                    </p>
-                    <div class="about-stats">
-                        <div class="stat">
-                            <h3 class="stat-number">50+</h3>
-                            <p class="stat-label">Projects Completed</p>
-                        </div>
-                        <div class="stat">
-                            <h3 class="stat-number">3+</h3>
-                            <p class="stat-label">Years Experience</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <div class="about-card card">
-                        <div class="card-content">
-                            <h4>Always Learning</h4>
-                            <p>Continuously exploring new technologies and best practices to stay at the forefront of software development.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <section class="section work" id="work">
+      <div class="section-heading reveal">
+        <p class="kicker">01 / Selected work</p>
+        <h2>Things I've shipped.</h2>
+        <p>Real products, built for people to use.</p>
+      </div>
+
+      <div class="project-grid">
+        <a class="project project-large reveal" href="https://parampateldev.github.io/empire/" target="_blank" rel="noreferrer">
+          <div class="project-visual empire-art" aria-hidden="true">
+            <span class="orbit orbit-one"></span><span class="orbit orbit-two"></span>
+            <div class="art-title">EMPIRE</div><div class="art-code">ABC123</div>
+          </div>
+          <div class="project-info">
+            <div><p class="project-type">Multiplayer web game</p><h3>Empire</h3></div>
+            <span class="arrow">↗</span>
+            <p>Real-time rooms, private word submission, timed reveals, shareable links, and host-controlled game state.</p>
+            <div class="tags"><span>JavaScript</span><span>Firebase</span><span>Realtime</span></div>
+          </div>
+        </a>
+
+        <a class="project reveal" href="https://parampateldev.github.io/imposter/" target="_blank" rel="noreferrer">
+          <div class="project-visual imposter-art" aria-hidden="true">
+            <div class="radar"><i></i><i></i><i></i><i></i><b>?</b></div>
+          </div>
+          <div class="project-info">
+            <div><p class="project-type">Social game</p><h3>Imposter</h3></div>
+            <span class="arrow">↗</span>
+            <p>A live multiplayer word game with online rooms, shareable links, and a pass-and-play mode.</p>
+            <div class="tags"><span>JavaScript</span><span>Firebase</span><span>Game design</span></div>
+          </div>
+        </a>
+
+        <a class="project reveal" href="https://parampateldev.github.io/engr101-oh-dashboard/" target="_blank" rel="noreferrer">
+          <div class="project-visual queue-art" aria-hidden="true">
+            <div class="queue-window"><div><span></span><span></span><span></span></div><p>OFFICE HOURS</p><strong>Queue is open</strong><i></i><i></i><i></i></div>
+          </div>
+          <div class="project-info">
+            <div><p class="project-type">Teaching tool</p><h3>Office Hours Dashboard</h3></div>
+            <span class="arrow">↗</span>
+            <p>A live queue built to make ENGR 101 office hours easier to run and easier for students to follow.</p>
+            <div class="tags"><span>JavaScript</span><span>Live data</span><span>UX</span></div>
+          </div>
+        </a>
+      </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills" data-aos="fade-up">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Skills & Technologies</h2>
-                <p class="section-subtitle">Tools and technologies I work with</p>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3 class="category-title">Frontend</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <i class="fab fa-js-square"></i>
-                            <span>JavaScript</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-react"></i>
-                            <span>React</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-vue"></i>
-                            <span>Vue.js</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-html5"></i>
-                            <span>HTML5</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-css3-alt"></i>
-                            <span>CSS3</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-sass"></i>
-                            <span>Sass</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3 class="category-title">Backend</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <i class="fab fa-node-js"></i>
-                            <span>Node.js</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-python"></i>
-                            <span>Python</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-database"></i>
-                            <span>MongoDB</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-database"></i>
-                            <span>PostgreSQL</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-aws"></i>
-                            <span>AWS</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-docker"></i>
-                            <span>Docker</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3 class="category-title">Tools & Others</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <i class="fab fa-git-alt"></i>
-                            <span>Git</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-github"></i>
-                            <span>GitHub</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-figma"></i>
-                            <span>Figma</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-terminal"></i>
-                            <span>Terminal</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fab fa-linux"></i>
-                            <span>Linux</span>
-                        </div>
-                        <div class="skill-item">
-                            <i class="fas fa-code"></i>
-                            <span>VS Code</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <section class="section experience" id="experience">
+      <div class="section-heading reveal">
+        <p class="kicker">02 / Experience</p>
+        <h2>Engineering at scale,<br>teaching at the fundamentals.</h2>
+      </div>
+      <div class="timeline">
+        <article class="role reveal">
+          <div class="role-date">Latest internship</div>
+          <div class="role-main">
+            <div class="role-title"><h3>Amazon Web Services</h3><span>Software Engineering Intern</span></div>
+            <p>Built canary testing frameworks for distributed services across regions and worked with a surface area spanning 45+ APIs.</p>
+            <ul><li>Distributed systems</li><li>Canary testing</li><li>Cloud infrastructure</li></ul>
+          </div>
+        </article>
+        <article class="role reveal">
+          <div class="role-date">University of Michigan</div>
+          <div class="role-main">
+            <div class="role-title"><h3>ENGR 101</h3><span>Instructional Aide</span></div>
+            <p>Teach programming labs and hold office hours for first-year engineers, helping students reason through C++ and MATLAB instead of handing them answers.</p>
+            <ul><li>C++</li><li>MATLAB</li><li>Technical teaching</li></ul>
+          </div>
+        </article>
+        <article class="role reveal compact-role">
+          <div class="role-date">Across 3 internships</div>
+          <div class="role-main">
+            <div class="role-title"><h3>Backend & Product Engineering</h3><span>Software engineering</span></div>
+            <p>Experience spanning backend APIs, GraphQL with gqlgen, product development, and production software.</p>
+            <ul><li>Go</li><li>GraphQL</li><li>Python</li></ul>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="projects" data-aos="fade-up">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Featured Projects</h2>
-                <p class="section-subtitle">Some of my recent work</p>
-            </div>
-            <div class="projects-grid">
-                <div class="project-card" data-aos="fade-up" data-aos-delay="0">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=500&fit=crop&crop=center" alt="ML Quant Finance Platform" loading="lazy" width="800" height="500">
-                        <div class="project-overlay">
-                            <div class="project-tech-badges">
-                                <span class="tech-badge">Python</span>
-                                <span class="tech-badge">PyTorch</span>
-                                <span class="tech-badge">React</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">ML Quant Finance Platform</h3>
-                        <p class="project-description">
-                            Machine learning-powered quantitative trading platform with real-time market analysis, 
-                            PyTorch models, algorithmic trading strategies, and live dashboard for financial analytics.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">PyTorch</span>
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Flask</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://parampateldev.github.io/ml-quant-finance/" target="_blank" rel="noopener" class="project-link live-demo" aria-label="View ML Quant Finance live demo">
-                                <i class="fas fa-external-link-alt"></i>
-                                Live Demo
-                            </a>
-                            <a href="https://github.com/parampateldev/ml-quant-finance" target="_blank" rel="noopener" class="project-link github" aria-label="View ML Quant Finance on GitHub">
-                                <i class="fab fa-github"></i>
-                                GitHub
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&h=500&fit=crop&crop=center" alt="TaskFlow AI" loading="lazy" width="800" height="500">
-                        <div class="project-overlay">
-                            <div class="project-tech-badges">
-                                <span class="tech-badge">Node.js</span>
-                                <span class="tech-badge">Express</span>
-                                <span class="tech-badge">REST API</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">TaskFlow AI - Priority Manager</h3>
-                        <p class="project-description">
-                            Intelligent task prioritization system with AI-powered scoring algorithm. Features REST API backend, 
-                            sleek dark-themed UI, and smart recommendations based on urgency, impact, effort, and deadlines.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Node.js</span>
-                            <span class="tech-tag">Express</span>
-                            <span class="tech-tag">REST API</span>
-                            <span class="tech-tag">JavaScript</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="projects/task-priority-api/index.html" target="_blank" rel="noopener" class="project-link live-demo" aria-label="View TaskFlow AI live demo">
-                                <i class="fas fa-external-link-alt"></i>
-                                Live Demo
-                            </a>
-                            <a href="https://github.com/parampateldev/task-priority-api" target="_blank" rel="noopener" class="project-link github" aria-label="View TaskFlow AI on GitHub">
-                                <i class="fab fa-github"></i>
-                                GitHub
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=800&h=500&fit=crop&crop=center" alt="Weather Dashboard" loading="lazy" width="800" height="500">
-                        <div class="project-overlay">
-                            <div class="project-tech-badges">
-                                <span class="tech-badge">JavaScript</span>
-                                <span class="tech-badge">API</span>
-                                <span class="tech-badge">Chart.js</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Weather Dashboard</h3>
-                        <p class="project-description">
-                            A responsive weather application with location-based forecasts, 
-                            interactive maps, and detailed weather analytics.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">API</span>
-                            <span class="tech-tag">CSS3</span>
-                            <span class="tech-tag">Chart.js</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://parampateldev.github.io/weather-dashboard" target="_blank" rel="noopener" class="project-link live-demo" aria-label="View Weather Dashboard live demo">
-                                <i class="fas fa-external-link-alt"></i>
-                                Live Demo
-                            </a>
-                            <a href="https://github.com/parampateldev/weather-dashboard" target="_blank" rel="noopener" class="project-link github" aria-label="View Weather Dashboard on GitHub">
-                                <i class="fab fa-github"></i>
-                                GitHub
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section class="section about" id="about">
+      <div class="about-card reveal">
+        <div class="portrait-wrap"><div class="portrait-glow"></div><img src="images/param_headshot.png" alt="Param Patel"></div>
+        <div class="about-copy">
+          <p class="kicker">03 / About</p>
+          <h2>Curious about the whole stack.</h2>
+          <p>I'm a Computer Science student at the University of Michigan with minors in Mathematics and Economics. I like work where technical depth meets a product people can actually use.</p>
+          <p>Outside of class, I build web products, teach new programmers, and keep looking for hard problems worth owning end to end.</p>
+          <div class="about-links">
+            <a href="mailto:parampat@umich.edu">Email ↗</a>
+            <a href="https://www.linkedin.com/in/parampat" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+            <a href="https://github.com/parampateldev" target="_blank" rel="noreferrer">GitHub ↗</a>
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact" data-aos="fade-up">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Get In Touch</h2>
-                <p class="section-subtitle">Let's work together on something amazing</p>
-            </div>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>Email</h4>
-                            <p>parampat@umich.edu</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fab fa-linkedin"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>LinkedIn</h4>
-                            <p>linkedin.com/in/parampat</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fab fa-github"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>GitHub</h4>
-                            <p>github.com/parampateldev</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h4>Location</h4>
-                            <p>Available Worldwide</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <form id="contact-form">
-                        <div class="form-group">
-                            <input type="text" id="name" name="name" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" id="email" name="email" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="subject" name="subject" placeholder="Subject" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <section class="closing reveal">
+      <p>Have something ambitious in mind?</p>
+      <a href="mailto:parampat@umich.edu">Let's build it together. <span>↗</span></a>
     </section>
+  </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-text">
-                    <p>&copy; 2025 Param Patel. All rights reserved.</p>
-                </div>
-                <div class="footer-social">
-                    <a href="#" class="social-link">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="#" class="social-link">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="#" class="social-link">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="social-link">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </footer>
-    </div> <!-- End main-content -->
-
-    <script src="script.js"></script>
+  <footer><span>© <span id="year"></span> Param Patel</span><span>Designed and built in Michigan</span><a href="#top">Back to top ↑</a></footer>
+  <script src="script.js"></script>
 </body>
 </html>
