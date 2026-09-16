@@ -58,26 +58,15 @@ addEventListener('scroll',onScroll,{passive:true});onScroll();
 
 // Fluid simulation used by the reference portfolio.
 if (window.WebGLFluidEnhanced && document.getElementById('fluid')) {
-  window.WebGLFluidEnhanced.simulation(document.getElementById('fluid'), {
-    SIM_RESOLUTION: 128,
-    DYE_RESOLUTION: 1440,
-    CAPTURE_RESOLUTION: 1512,
-    DENSITY_DISSIPATION: 0.5,
-    VELOCITY_DISSIPATION: 3,
-    PRESSURE: 0.1,
-    PRESSURE_ITERATIONS: 20,
-    CURL: 3,
-    SPLAT_RADIUS: 0.2,
-    SPLAT_FORCE: 6000,
-    SHADING: true,
-    COLOR_UPDATE_SPEED: 10,
-    HOVER: true,
-    INITIAL: false,
-    BACK_COLOR: '#080a0e',
-    TRANSPARENT: true,
-    BRIGHTNESS: 0.16,
-    BLOOM: false,
-    SUNRAYS: false,
-    COLOR_PALETTE: ['#6478ff', '#a9d95a', '#806be6']
+  const fluid = new window.WebGLFluidEnhanced.default(document.getElementById('fluid'));
+  fluid.setConfig({
+    simResolution: 128, dyeResolution: 1440, captureResolution: 1512,
+    densityDissipation: 0.5, velocityDissipation: 3, pressure: 0.1,
+    pressureIterations: 20, curl: 3, splatRadius: 0.2, splatForce: 6000,
+    shading: true, colorful: true, colorUpdateSpeed: 10, hover: true,
+    backgroundColor: '#080a0e', transparent: true, brightness: 0.16,
+    bloom: false, sunrays: false, colorPalette: ['#6478ff','#a9d95a','#806be6']
   });
+  fluid.start();
+  window.paramFluid = fluid;
 }
