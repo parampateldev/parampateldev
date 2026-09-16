@@ -55,3 +55,29 @@ function onScroll(){
   root.style.setProperty('--portrait-y',`${-14+pp*13}%`);
 }
 addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+// Fluid simulation used by the reference portfolio.
+if (window.WebGLFluidEnhanced && document.getElementById('fluid')) {
+  window.WebGLFluidEnhanced.simulation(document.getElementById('fluid'), {
+    SIM_RESOLUTION: 128,
+    DYE_RESOLUTION: 1440,
+    CAPTURE_RESOLUTION: 1512,
+    DENSITY_DISSIPATION: 0.5,
+    VELOCITY_DISSIPATION: 3,
+    PRESSURE: 0.1,
+    PRESSURE_ITERATIONS: 20,
+    CURL: 3,
+    SPLAT_RADIUS: 0.2,
+    SPLAT_FORCE: 6000,
+    SHADING: true,
+    COLOR_UPDATE_SPEED: 10,
+    HOVER: true,
+    INITIAL: false,
+    BACK_COLOR: '#080a0e',
+    TRANSPARENT: true,
+    BRIGHTNESS: 0.16,
+    BLOOM: false,
+    SUNRAYS: false,
+    COLOR_PALETTE: ['#6478ff', '#a9d95a', '#806be6']
+  });
+}
