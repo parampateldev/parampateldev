@@ -3,3 +3,4 @@
 .glass-cursor{display:none!important}.fluid-field{position:fixed;inset:0;width:100vw;height:100vh;z-index:12;pointer-events:none;overflow:visible;mix-blend-mode:screen;opacity:.72}.metaballs{fill:url(#fluidGradient)}.meta{will-change:transform;filter:drop-shadow(0 0 28px rgba(100,126,255,.2))}.fluid-field:after{content:"";position:absolute;inset:0;backdrop-filter:blur(1px)}
 @media(pointer:coarse){.fluid-field{opacity:.42}}
 @media(prefers-reduced-motion:reduce){.fluid-field{display:none}}
+.fluid-field{z-index:1;mix-blend-mode:normal;opacity:.48}.metaballs{fill:#6d78e8;opacity:.58}.topbar,main,footer{position:relative;z-index:3}
