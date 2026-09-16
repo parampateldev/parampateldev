@@ -9,20 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
   <canvas id="field" aria-hidden="true"></canvas>
   <div class="grain" aria-hidden="true"></div>
-  <svg class="fluid-field" aria-hidden="true" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <filter id="goo"><feGaussianBlur in="SourceGraphic" stdDeviation="22" result="blur"/><feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 30 -13" result="goo"/><feGaussianBlur in="goo" stdDeviation="5"/></filter>
-      <radialGradient id="fluidGradient"><stop offset="0" stop-color="#dfff91"/><stop offset=".42" stop-color="#7491ff"/><stop offset="1" stop-color="#7354e8"/></radialGradient>
-    </defs>
-    <g filter="url(#goo)" class="metaballs">
-      <circle class="meta meta-0" r="120"/><circle class="meta meta-1" r="100"/><circle class="meta meta-2" r="84"/><circle class="meta meta-3" r="69"/><circle class="meta meta-4" r="55"/><circle class="meta meta-5" r="44"/><circle class="meta meta-6" r="34"/><circle class="meta meta-7" r="27"/>
-    </g>
-  </svg>
+
 
   <header class="topbar">
     <a class="brand" href="#top">Param Patel</a>
@@ -37,6 +29,7 @@
     <section class="hero">
       <p class="eyebrow"><span></span> Software engineer · Michigan</p>
       <h1>Scalable systems for<br><em>problems that matter.</em></h1>
+      <div class="hero-portrait" aria-hidden="true"><img src="images/profile.JPG" alt=""></div>
       <p class="intro">Computer Science at the University of Michigan. Interested in distributed systems, developer tools, and products people actually want to use.</p>
       <div class="social-row">
         <a href="mailto:parampat@umich.edu">Email <span>↗</span></a>
@@ -80,6 +73,6 @@
   </main>
 
   <footer><span>© <span id="year"></span> Param Patel</span><a href="#top">Back to top ↑</a></footer>
-  <script src="script.js?v=5"></script>
+  <script src="script.js?v=6"></script>
 </body>
 </html>
