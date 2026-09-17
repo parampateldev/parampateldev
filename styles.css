@@ -9,4 +9,4 @@
 #fluid{position:fixed;inset:0;width:100vw;height:100vh;z-index:2;pointer-events:none;opacity:.72}.topbar,main,footer{position:relative;z-index:3}
 #fluid{position:fixed;inset:0;width:100vw;height:100vh;z-index:2;pointer-events:none;opacity:.72}#fluid canvas{width:100%!important;height:100%!important}
 #fluid{position:fixed!important;inset:0!important;display:block!important;z-index:2!important;pointer-events:none!important;opacity:.38!important}
-#fluid{opacity:.3!important}
+#fluid{opacity:.22!important}
