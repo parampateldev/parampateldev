@@ -62,7 +62,7 @@ if (window.WebGLFluidEnhanced && document.getElementById('fluid')) {
   fluid.setConfig({
     simResolution: 128, dyeResolution: 1440, captureResolution: 1512,
     densityDissipation: 0.5, velocityDissipation: 3, pressure: 0.1,
-    pressureIterations: 20, curl: 3, splatRadius: 0.045, splatForce: 1800,
+    pressureIterations: 20, curl: 3, splatRadius: 0.012, splatForce: 1100,
     shading: true, colorful: true, colorUpdateSpeed: 10, hover: true,
     backgroundColor: '#080a0e', transparent: true, brightness: 0.1,
     bloom: false, sunrays: false, colorPalette: ['#6478ff','#a9d95a','#806be6']
