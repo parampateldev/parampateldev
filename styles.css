@@ -12,3 +12,5 @@
 #fluid{opacity:.22!important}
 /* The fluid itself is the pointer on desktop. */
 @media (pointer:fine){html,body,body *{cursor:none!important}}
+.michigan-mark{display:inline-block;width:12px;height:9px;object-fit:contain;margin-left:4px;vertical-align:-1px}
+.hero .eyebrow>span{display:none!important}
