@@ -22,14 +22,6 @@ requestAnimationFrame(trackPortrait);
 let mouseX=innerWidth*.5, mouseY=innerHeight*.5;
 addEventListener('pointermove',e=>{mouseX=e.clientX;mouseY=e.clientY});
 
-const canvas = document.getElementById('field');
-const ctx = canvas.getContext('2d');
-let w, h, dpr;
-const blobs=[{x:.74,y:.25,r:.38,c:'89,123,255',a:.19},{x:.27,y:.63,r:.3,c:'201,255,74',a:.1},{x:.84,y:.78,r:.25,c:'255,112,72',a:.1}];
-function resize(){dpr=Math.min(devicePixelRatio,2);w=innerWidth;h=innerHeight;canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
-function draw(t){ctx.clearRect(0,0,w,h);blobs.forEach((b,i)=>{const x=(b.x+Math.sin(t*.00025+i)*.1+(mouseX/w-.5)*.07)*w;const y=(b.y+Math.cos(t*.0002+i)*.09+(mouseY/h-.5)*.05)*h;const r=b.r*Math.max(w,h);const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,`rgba(${b.c},${b.a})`);g.addColorStop(.5,`rgba(${b.c},${b.a*.4})`);g.addColorStop(1,`rgba(${b.c},0)`);ctx.fillStyle=g;ctx.fillRect(0,0,w,h)});requestAnimationFrame(draw)}
-addEventListener('resize',resize);resize();requestAnimationFrame(draw);
-
 const heroTitle=document.querySelector('h1');
 const story=document.querySelector('.motion-story');
 const sculpture=document.querySelector('.glass-sculpture');
@@ -61,7 +53,7 @@ if (window.WebGLFluidEnhanced && document.getElementById('fluid')) {
   const fluid = new window.WebGLFluidEnhanced.default(document.getElementById('fluid'));
   fluid.setConfig({
     simResolution: 128, dyeResolution: 1440, captureResolution: 1512,
-    densityDissipation: 0.5, velocityDissipation: 3, pressure: 0.1,
+    densityDissipation: 2.4, velocityDissipation: 4.2, pressure: 0.1,
     pressureIterations: 20, curl: 3, splatRadius: 0.012, splatForce: 1100,
     shading: true, colorful: true, colorUpdateSpeed: 10, hover: true,
     backgroundColor: '#080a0e', transparent: true, brightness: 0.1,
@@ -69,17 +61,22 @@ if (window.WebGLFluidEnhanced && document.getElementById('fluid')) {
   });
   fluid.start();
   window.paramFluid = fluid;
-  // The library's hover listener is attached to its canvas. Our canvas sits behind
-  // the page, so feed it pointer movement at window level instead.
-  let lastFluidX = null, lastFluidY = null, lastFluidAt = 0;
+  // Feed desktop movement into the simulation from the full window. The fluid
+  // library stores a device-pixel-wide canvas but receives CSS-pixel positions,
+  // so x must be scaled for Retina screens to reach the full viewport.
+  let lastFluidX = null, lastFluidY = null;
+  const feedFluid = (e) => {
+    if (lastFluidX === null) { lastFluidX = e.clientX; lastFluidY = e.clientY; return; }
+    const rawX = e.clientX - lastFluidX;
+    const rawY = e.clientY - lastFluidY;
+    lastFluidX = e.clientX; lastFluidY = e.clientY;
+    if (Math.abs(rawX) + Math.abs(rawY) < .25) return;
+    const dx = Math.max(-130, Math.min(130, rawX * 14));
+    const dy = Math.max(-130, Math.min(130, rawY * 14));
+    fluid.splatAtLocation(e.clientX * (window.devicePixelRatio || 1), e.clientY, dx, dy, '#7186ff');
+  };
+  window.addEventListener('mousemove', feedFluid, { passive: true });
   window.addEventListener('pointermove', (e) => {
-    const now = performance.now();
-    if (now - lastFluidAt < 22) return;
-    if (lastFluidX === null) { lastFluidX = e.clientX; lastFluidY = e.clientY; }
-    const dx = Math.max(-260, Math.min(260, (e.clientX - lastFluidX) * 24));
-    const dy = Math.max(-260, Math.min(260, (e.clientY - lastFluidY) * 24));
-    const speed = Math.hypot(dx, dy);
-    if (speed > 5) fluid.splatAtLocation(e.clientX, e.clientY, dx, dy, '#7186ff');
-    lastFluidX = e.clientX; lastFluidY = e.clientY; lastFluidAt = now;
+    if (e.pointerType && e.pointerType !== 'mouse') feedFluid(e);
   }, { passive: true });
 }
