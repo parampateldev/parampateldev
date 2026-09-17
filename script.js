@@ -62,11 +62,24 @@ if (window.WebGLFluidEnhanced && document.getElementById('fluid')) {
   fluid.setConfig({
     simResolution: 128, dyeResolution: 1440, captureResolution: 1512,
     densityDissipation: 0.5, velocityDissipation: 3, pressure: 0.1,
-    pressureIterations: 20, curl: 3, splatRadius: 0.2, splatForce: 6000,
+    pressureIterations: 20, curl: 3, splatRadius: 0.045, splatForce: 1800,
     shading: true, colorful: true, colorUpdateSpeed: 10, hover: true,
-    backgroundColor: '#080a0e', transparent: true, brightness: 0.16,
+    backgroundColor: '#080a0e', transparent: true, brightness: 0.1,
     bloom: false, sunrays: false, colorPalette: ['#6478ff','#a9d95a','#806be6']
   });
   fluid.start();
   window.paramFluid = fluid;
+  // The library's hover listener is attached to its canvas. Our canvas sits behind
+  // the page, so feed it pointer movement at window level instead.
+  let lastFluidX = null, lastFluidY = null, lastFluidAt = 0;
+  window.addEventListener('pointermove', (e) => {
+    const now = performance.now();
+    if (now - lastFluidAt < 22) return;
+    if (lastFluidX === null) { lastFluidX = e.clientX; lastFluidY = e.clientY; }
+    const dx = Math.max(-260, Math.min(260, (e.clientX - lastFluidX) * 24));
+    const dy = Math.max(-260, Math.min(260, (e.clientY - lastFluidY) * 24));
+    const speed = Math.hypot(dx, dy);
+    if (speed > 5) fluid.splatAtLocation(e.clientX, e.clientY, dx, dy, '#7186ff');
+    lastFluidX = e.clientX; lastFluidY = e.clientY; lastFluidAt = now;
+  }, { passive: true });
 }
